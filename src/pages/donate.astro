@@ -1,0 +1,497 @@
+---
+import Base from '../layouts/Base.astro';
+import { DONATION_PROVIDER_URL, isConfigured } from '../config.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const presets = [10, 25, 50, 100, 250, 500];
+const providerReady = isConfigured(DONATION_PROVIDER_URL);
+
+const moreWays = [
+  {
+    n: '01',
+    title: 'Clinical Volunteers',
+    body: 'Licensed physicians, nurses, and allied health professionals are welcomed for missions. Non-clinical roles in logistics and coordination are also available.',
+    cta: 'Volunteer Inquiry',
+    reason: 'volunteer',
+  },
+  {
+    n: '02',
+    title: 'Institutional Partnerships',
+    body: 'We partner with hospitals, medical schools, and corporations for supply donations, training collaborations, and program funding.',
+    cta: 'Partnership Inquiry',
+    reason: 'partnership',
+  },
+  {
+    n: '03',
+    title: 'Spread Awareness',
+    body: 'Sharing our mission with colleagues and community groups expands our base of supporters and volunteers. Request an information packet to share.',
+    cta: 'Request Information Packet',
+    reason: 'packet',
+  },
+];
+---
+
+<Base
+  title="Donate"
+  path="donate"
+  description="Give, volunteer clinical time, or partner your institution — every form of support extends our capacity to serve patients across the Caribbean. Tax-deductible 501(c)(3)."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>Get Involved
+      </nav>
+      <h1>Get involved</h1>
+      <p class="intro">
+        Give, volunteer clinical time, or partner your institution &mdash; every
+        form of support extends our capacity to serve patients across the
+        Caribbean.
+      </p>
+    </div>
+  </div>
+
+  <section class="donate-section">
+    <div class="donate-card">
+      <div class="donate-head">
+        <div>
+          <div class="donate-title">Make a donation</div>
+          <div class="donate-sub">Tax-deductible &middot; 501(c)(3) &middot; EIN 99-2604475</div>
+        </div>
+      </div>
+
+      <form class="donate-body" id="donate-form" data-provider-ready={providerReady ? 'true' : 'false'} data-provider-url={DONATION_PROVIDER_URL}>
+        <!-- Frequency toggle -->
+        <div class="freq-toggle" role="group" aria-label="Donation frequency">
+          <button type="button" class="freq active" data-freq="one-time" aria-pressed="true">One-time</button>
+          <button type="button" class="freq" data-freq="monthly" aria-pressed="false">Monthly</button>
+        </div>
+
+        <!-- Amount presets -->
+        <span class="field-label" id="amount-label">Choose an amount</span>
+        <div class="amount-grid" role="group" aria-labelledby="amount-label">
+          {
+            presets.map((a) => (
+              <button
+                type="button"
+                class={a === 100 ? 'amount active' : 'amount'}
+                data-amount={a}
+                aria-pressed={a === 100 ? 'true' : 'false'}
+              >
+                ${a}
+              </button>
+            ))
+          }
+        </div>
+
+        <!-- Custom amount -->
+        <div class="custom-wrap" id="custom-wrap">
+          <span aria-hidden="true">$</span>
+          <label class="visually-hidden" for="custom-amount">Other amount</label>
+          <input type="text" id="custom-amount" inputmode="numeric" placeholder="Other amount" maxlength="7" />
+        </div>
+        <p class="field-error" id="amount-error" role="alert" hidden></p>
+
+        <!-- Dedicate -->
+        <label class="dedicate-row">
+          <input type="checkbox" id="dedicate-toggle" />
+          <span>Dedicate this gift in honor or memory of someone</span>
+        </label>
+        <div id="dedicate-field" hidden>
+          <label class="visually-hidden" for="dedicate-name">In honor of</label>
+          <input type="text" id="dedicate-name" placeholder="In honor of…" class="dedicate-input" />
+        </div>
+
+        <!-- Placeholder note -->
+        <div class="amber-banner" style="margin-top:1.5rem;font-size:0.83rem;">
+          <span class="amber-tag">Placeholder</span>
+          <span>
+            Example goal for layout &mdash; the $25,000 founding-campaign target
+            is illustrative, pending the board&rsquo;s confirmed figure.
+          </span>
+        </div>
+
+        {
+          !providerReady && (
+            <div class="config-note" id="config-note">
+              <strong>Configure your donation provider.</strong> Set
+              <code>DONATION_PROVIDER_URL</code> in <code>src/config.js</code> to
+              a free Zeffy or Givebutter donation page. Until then, this button
+              shows the chosen amount but cannot complete a gift.
+            </div>
+          )
+        }
+
+        <button type="submit" class="donate-submit" id="donate-submit">
+          Continue — <span id="amount-display">$100</span><span id="freq-display"></span> &rarr;
+        </button>
+        <p class="secure-note">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          You will be taken to our secure donation provider to complete your gift.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- More ways to help -->
+  <section class="container" style="padding:clamp(1.5rem,3vw,2.5rem) clamp(1.25rem,4vw,2rem) clamp(3.5rem,6vw,5rem);">
+    <p class="eyebrow" style="text-align:center;">More Ways to Help</p>
+    <h2 class="section-title" style="text-align:center;margin:0 0 2.5rem;">Beyond a donation.</h2>
+    <div class="ways-grid">
+      {
+        moreWays.map((w) => (
+          <div class="way-card">
+            <div class="way-num">{w.n}</div>
+            <h3>{w.title}</h3>
+            <p>{w.body}</p>
+            <a href={`${base}/contact?reason=${w.reason}`} class="btn btn-outline" style="width:100%;font-size:0.85rem;padding:0.65rem 1.2rem;">
+              {w.cta}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .donate-section {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2rem) clamp(2rem, 3vw, 3rem);
+  }
+  .donate-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(10, 31, 61, 0.06);
+    overflow: hidden;
+  }
+  .donate-head {
+    background: linear-gradient(135deg, var(--navy), var(--navy-2));
+    color: #fff;
+    padding: 1.5rem clamp(1.5rem, 3vw, 2rem);
+  }
+  .donate-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  .donate-sub {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.2rem;
+  }
+  .donate-body {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .freq-toggle {
+    display: flex;
+    background: #f3f4f6;
+    border-radius: 4px;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+  .freq {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+  }
+  .freq.active {
+    background: #fff;
+    color: var(--navy);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    color: var(--text-2);
+  }
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .amount {
+    background: #fff;
+    color: var(--text-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .amount.active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+
+  .custom-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 0 0.75rem;
+    background: #fff;
+    color: var(--muted);
+  }
+  .custom-wrap.active {
+    border-color: var(--navy);
+  }
+  .custom-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.7rem 0;
+    font-size: 0.95rem;
+    background: transparent;
+    color: var(--text);
+  }
+
+  .field-error {
+    font-size: 0.8rem;
+    color: #d9534f;
+    margin: 0.6rem 0 0;
+  }
+
+  .dedicate-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--text-2);
+  }
+  .dedicate-input {
+    width: 100%;
+    margin-top: 0.75rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    font-size: 0.92rem;
+    padding: 0.7rem 0.9rem;
+    outline: none;
+    color: var(--text);
+  }
+  .dedicate-input:focus {
+    border-color: var(--navy);
+  }
+
+  .config-note {
+    margin-top: 1.5rem;
+    padding: 0.85rem 1rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 4px;
+    font-size: 0.83rem;
+    color: #3730a3;
+    line-height: 1.55;
+  }
+  .config-note code {
+    background: rgba(55, 48, 163, 0.1);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+
+  .donate-submit {
+    width: 100%;
+    margin-top: 1.5rem;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    padding: 0.95rem;
+    cursor: pointer;
+  }
+  .donate-submit:hover {
+    background: #997209;
+  }
+  .secure-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0.9rem 0 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .ways-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .way-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .way-card:hover {
+    border-color: var(--border-strong);
+  }
+  .way-num {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  .way-card h3 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    color: var(--navy);
+  }
+  .way-card p {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    flex: 1;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('donate-form');
+  if (form) {
+    const freqBtns = Array.from(form.querySelectorAll('.freq'));
+    const amountBtns = Array.from(form.querySelectorAll('.amount'));
+    const customWrap = document.getElementById('custom-wrap');
+    const customInput = document.getElementById('custom-amount');
+    const amountDisplay = document.getElementById('amount-display');
+    const freqDisplay = document.getElementById('freq-display');
+    const amountError = document.getElementById('amount-error');
+    const dedicateToggle = document.getElementById('dedicate-toggle');
+    const dedicateField = document.getElementById('dedicate-field');
+    const dedicateName = document.getElementById('dedicate-name');
+
+    const providerReady = form.dataset.providerReady === 'true';
+    const providerUrl = form.dataset.providerUrl;
+
+    let freq = 'one-time';
+    let amount = 100; // default preset
+
+    const effective = () => {
+      const custom = customInput.value.replace(/\D/g, '');
+      return custom ? Number(custom) : amount;
+    };
+
+    const refresh = () => {
+      const eff = effective();
+      amountDisplay.textContent = '$' + Number(eff || 0).toLocaleString('en-US');
+      freqDisplay.textContent = freq === 'monthly' ? '/month' : '';
+    };
+
+    freqBtns.forEach((b) => {
+      b.addEventListener('click', () => {
+        freq = b.dataset.freq;
+        freqBtns.forEach((x) => {
+          const on = x === b;
+          x.classList.toggle('active', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        refresh();
+      });
+    });
+
+    amountBtns.forEach((b) => {
+      b.addEventListener('click', () => {
+        amount = Number(b.dataset.amount);
+        customInput.value = '';
+        customWrap.classList.remove('active');
+        amountBtns.forEach((x) => {
+          const on = x === b;
+          x.classList.toggle('active', on);
+          x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        amountError.hidden = true;
+        refresh();
+      });
+    });
+
+    customInput.addEventListener('input', () => {
+      customInput.value = customInput.value.replace(/\D/g, '').slice(0, 7);
+      if (customInput.value) {
+        // typing overrides preset selection
+        amountBtns.forEach((x) => {
+          x.classList.remove('active');
+          x.setAttribute('aria-pressed', 'false');
+        });
+        customWrap.classList.add('active');
+      } else {
+        customWrap.classList.remove('active');
+      }
+      amountError.hidden = true;
+      refresh();
+    });
+
+    dedicateToggle.addEventListener('change', () => {
+      dedicateField.hidden = !dedicateToggle.checked;
+      if (!dedicateToggle.checked) dedicateName.value = '';
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const eff = effective();
+      if (!eff || eff < 1) {
+        amountError.textContent = 'Please choose or enter an amount.';
+        amountError.hidden = false;
+        return;
+      }
+
+      if (!providerReady) {
+        amountError.textContent =
+          'Donation provider not configured yet. Set DONATION_PROVIDER_URL in src/config.js.';
+        amountError.hidden = false;
+        return;
+      }
+
+      // Hand off to the real provider with amount/frequency/dedication as params.
+      const url = new URL(providerUrl);
+      url.searchParams.set('amount', String(eff));
+      url.searchParams.set('frequency', freq);
+      if (dedicateToggle.checked && dedicateName.value.trim()) {
+        url.searchParams.set('dedication', dedicateName.value.trim());
+      }
+      window.location.href = url.toString();
+    });
+
+    refresh();
+  }
+</script>

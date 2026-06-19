@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import { featuredQuote, testimonials } from '../data/stories.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Stories"
+  path="stories"
+  description="Voices behind the work — our founder, volunteer clinicians, and partner providers on why CaribHealth Foundation exists."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>Stories
+      </nav>
+      <h1>Voices behind the work</h1>
+      <p class="intro">
+        As a newly founded organization, our story begins with the people
+        committing to it &mdash; our founder, volunteer clinicians, and partner
+        providers. Their words speak to why CaribHealth exists.
+      </p>
+    </div>
+  </div>
+
+  <section class="container section">
+    <div class="amber-banner" style="margin:0 0 2.5rem;">
+      <span class="amber-tag">Interim</span>
+      <span>
+        <strong>Every quote and testimonial on this page is placeholder copy</strong>
+        shown for layout only &mdash; not real statements from any named or
+        unnamed person. They will be replaced with approved, attributed quotes
+        before launch.
+      </span>
+    </div>
+
+    <figure class="featured">
+      <div class="featured-rule" aria-hidden="true"></div>
+      <span class="featured-tag">Placeholder quote</span>
+      <blockquote>&ldquo;{featuredQuote.quote}&rdquo;</blockquote>
+      <figcaption>{featuredQuote.attribution}</figcaption>
+    </figure>
+
+    <div class="stories-head">
+      <h2>Why our volunteers are joining</h2>
+      <span class="inline-tag">Placeholder statements</span>
+    </div>
+
+    <div class="stories-grid">
+      {
+        testimonials.map((t) => (
+          <figure class="story-card">
+            <blockquote>&ldquo;{t.quote}&rdquo;</blockquote>
+            <figcaption>
+              <div class="story-avatar" aria-hidden="true">{t.initial}</div>
+              <div>
+                <div class="story-role">{t.role}</div>
+                <div class="story-detail">{t.detail}</div>
+              </div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="closing">
+      <div style="max-width:560px;">
+        <p class="eyebrow" style="margin-bottom:0.6rem;">Share Your Experience</p>
+        <h2 class="closing-h">Part of our work, or want to be?</h2>
+        <p class="closing-p">
+          We welcome statements from volunteers, donors, and partners. Your
+          account helps inform future contributors.
+        </p>
+      </div>
+      <a href={`${base}/contact?reason=testimonial`} class="btn btn-navy" style="white-space:nowrap;">Submit a Statement</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .featured {
+    background: var(--navy);
+    color: #fff;
+    padding: clamp(2.5rem, 4vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+    margin: 0 0 3.5rem;
+    position: relative;
+    border-radius: 4px;
+  }
+  .featured-rule {
+    width: 34px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .featured-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fde4cc;
+    background: rgba(255, 247, 237, 0.12);
+    border: 1px solid #b45309;
+    border-radius: 3px;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 1rem;
+  }
+  .featured blockquote {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2.3vw, 1.55rem);
+    color: #fff;
+    line-height: 1.55;
+    max-width: 740px;
+    margin: 0 0 1.5rem;
+    font-weight: 400;
+  }
+  .featured figcaption {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .stories-head {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .stories-head h2 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin: 0;
+  }
+  .inline-tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber-text);
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 3px;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .story-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.85rem;
+    margin: 0;
+  }
+  .story-card blockquote {
+    font-family: var(--serif);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin: 0 0 1.5rem;
+  }
+  .story-card figcaption {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .story-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8edf5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .story-role {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .story-detail {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .closing {
+    background: var(--tint-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  .closing-h {
+    font-family: var(--serif);
+    color: var(--navy);
+    font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+  }
+  .closing-p {
+    color: var(--text-2);
+    line-height: 1.7;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>

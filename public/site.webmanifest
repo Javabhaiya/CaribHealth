@@ -1,0 +1,23 @@
+{
+  "name": "CaribHealth Foundation",
+  "short_name": "CaribHealth",
+  "description": "A Connecticut 501(c)(3) nonprofit improving access to high-quality medical care across the Caribbean.",
+  "start_url": "/CaribHealth/",
+  "scope": "/CaribHealth/",
+  "display": "standalone",
+  "background_color": "#fbfbfa",
+  "theme_color": "#0a1f3d",
+  "icons": [
+    {
+      "src": "/CaribHealth/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/CaribHealth/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

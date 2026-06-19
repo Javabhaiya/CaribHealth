@@ -1,0 +1,43 @@
+---
+// Lucide-style inline stroke icons used across the site.
+// Usage: <Icon name="heart-pulse" size={26} />
+const { name, size = 26, stroke = 1.5 } = Astro.props;
+
+const paths = {
+  'heart-pulse': [
+    'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z',
+    'M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27',
+  ],
+  'briefcase-medical': [
+    'M3 7h18M5 7v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M12 11v6M9 14h6',
+  ],
+  'graduation-cap': [
+    'M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z',
+    'M22 10v6',
+    'M6 12.5V16a6 3 0 0 0 12 0v-3.5',
+  ],
+  'shield-check': ['M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7l8-4z', 'M9 12l2 2 4-4'],
+  mail: ['M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z', 'M22 6 12 13 2 6'],
+  clock: ['M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z', 'M12 6v6l4 2'],
+  'map-pin': ['M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z', 'M12 10a3 3 0 1 0 0 .01z'],
+  'file-text': [
+    'M9 12h6M9 16h6M9 8h6M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3.5-2-3.5 2-3.5-2L5 21z',
+  ],
+};
+
+const d = paths[name] || [];
+---
+
+<svg
+  width={size}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={stroke}
+  viewBox="0 0 24 24"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {d.map((p) => <path d={p} />)}
+</svg>

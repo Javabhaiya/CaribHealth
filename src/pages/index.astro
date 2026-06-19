@@ -1,0 +1,373 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const programs = [
+  {
+    title: 'Medical Missions',
+    body: 'Volunteer clinical teams deliver screenings, consultations, and procedures — with founding strength in digestive health — at partner sites across the Caribbean.',
+    icon: 'heart-pulse',
+  },
+  {
+    title: 'Equipment Donation',
+    body: 'Sourcing, refurbishing, and shipping diagnostic and procedural equipment to clinics operating with limited infrastructure.',
+    icon: 'briefcase-medical',
+  },
+  {
+    title: 'Training & Education',
+    body: 'Hands-on workshops and continuing education that build local capacity in symptom recognition, triage, and procedure technique.',
+    icon: 'graduation-cap',
+  },
+  {
+    title: 'Training Grants',
+    body: 'Grants that fund the education of medical professionals who serve — or are preparing to serve — communities across the Caribbean.',
+    icon: 'shield-check',
+  },
+];
+
+const stats = [
+  { num: '2024', label: 'Year Founded' },
+  { num: '501(c)(3)', label: 'Tax-Deductible Status' },
+  { num: '4', label: 'Core Programs' },
+  { num: 'Caribbean', label: 'Region Served' },
+];
+
+const goals = [
+  { num: '1st', text: 'Inaugural digestive-health mission to a Caribbean partner site.' },
+  { num: '2', text: 'Partner clinics equipped with donated diagnostic tools.' },
+  { num: '$25K', text: 'Founding campaign goal to fund missions and supplies.' },
+  { num: '3+', text: 'Local providers trained through workshops and grants.' },
+];
+---
+
+<Base
+  title="Home"
+  path=""
+  description="CaribHealth Foundation partners with clinicians and local providers to bring high-quality medical care, equipment, and training to underserved communities across the Caribbean."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <p class="hero-eyebrow">
+        <span class="rule" aria-hidden="true"></span>Medical missions &middot;
+        Equipment &middot; Training &middot; The Caribbean
+      </p>
+      <h1>Access to quality medical care for the Caribbean&rsquo;s underserved.</h1>
+      <p class="hero-sub">
+        CaribHealth Foundation partners with clinicians and local providers to
+        bring high-quality medical care, equipment, and training to underserved
+        communities across the Caribbean.
+      </p>
+      <div class="hero-cta">
+        <a href={`${base}/donate`} class="btn btn-gold">Support Our Work</a>
+        <a href={`${base}/programs`} class="btn btn-ghost">Explore Our Programs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <div class="stats">
+    <div class="container stats-grid">
+      {
+        stats.map((s) => (
+          <div class="stat">
+            <span class="stat-num">{s.num}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- What We Do -->
+  <section class="container section">
+    <p class="eyebrow">What We Do</p>
+    <h2 class="section-title" style="max-width:720px;">
+      A focused model for closing gaps in Caribbean medical care.
+    </h2>
+    <p class="lede">
+      Founded in 2024 by gastroenterologist Dr. Gyanprakash Ketwaroo, CaribHealth
+      concentrates resources where they create durable change: direct clinical
+      missions, the equipment to sustain them, and the training and grants that
+      let local providers carry the work forward.
+    </p>
+    <div class="program-grid">
+      {
+        programs.map((p) => (
+          <div class="program-card">
+            <div class="program-icon">
+              <Icon name={p.icon} />
+            </div>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <div style="margin-top:2.25rem;">
+      <a href={`${base}/programs`} class="btn btn-outline" style="font-size:0.88rem;padding:0.7rem 1.5rem;">See how each program works &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Quote band (PLACEHOLDER) -->
+  <div class="quote-band">
+    <div class="quote-inner">
+      <p class="eyebrow" style="text-align:center;">Why It Matters</p>
+      <div class="amber-pill" style="margin-bottom:1.25rem;">
+        <span class="label">Placeholder</span>
+        <span class="note">Interim quote &mdash; pending Dr.&nbsp;Ketwaroo&rsquo;s approved words</span>
+      </div>
+      <blockquote>
+        &ldquo;Across much of the Caribbean, conditions routinely managed
+        elsewhere go undiagnosed for years. Closing that gap is not charity
+        &mdash; it is equity.&rdquo;
+      </blockquote>
+      <cite>Dr. Gyanprakash Ketwaroo &middot; Founder &amp; President</cite>
+    </div>
+  </div>
+
+  <!-- First-Year Goals (PLACEHOLDER) -->
+  <section class="container section">
+    <p class="eyebrow">Our First-Year Goals</p>
+    <h2 class="section-title" style="max-width:680px;">
+      What your support helps us reach.
+    </h2>
+    <div class="amber-banner" style="max-width:680px;margin:0 0 2.5rem;">
+      <span class="amber-tag">Placeholder</span>
+      <span>
+        Illustrative first-year targets shown as examples &mdash; to be replaced
+        with board-approved goals.
+      </span>
+    </div>
+    <div class="goals-grid">
+      {
+        goals.map((g) => (
+          <div class="goal">
+            <div class="goal-num">{g.num}</div>
+            <p>{g.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="container" style="padding:0 clamp(1.25rem,4vw,2rem) clamp(3.5rem,6vw,5.5rem);">
+    <div class="cta-panel" style="text-align:center;">
+      <h2 class="cta-title">Your contribution directly funds patient care.</h2>
+      <p class="cta-sub">
+        Gifts support medical supplies, mission logistics, and training for our
+        partner communities. Every dollar is tax-deductible.
+      </p>
+      <a href={`${base}/donate`} class="btn btn-gold">Make a Donation</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    padding: clamp(3.25rem, 6vw, 5.75rem) 0 clamp(3.25rem, 5vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    right: -8%;
+    top: -20%;
+    width: 46%;
+    height: 140%;
+    background: radial-gradient(
+      circle,
+      rgba(184, 134, 11, 0.1) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.4rem;
+    font-weight: 500;
+  }
+  .hero-eyebrow .rule {
+    display: inline-block;
+    width: 26px;
+    height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin-right: 0.75rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.6vw, 3.1rem);
+    font-weight: 500;
+    line-height: 1.14;
+    max-width: 780px;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.018em;
+  }
+  .hero-sub {
+    font-size: 1.08rem;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 600px;
+    margin: 0 0 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .stats {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .stat {
+    padding: 2.25rem clamp(1.25rem, 3vw, 2rem);
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child {
+    border-right: none;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--navy);
+    display: block;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.74rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+    display: block;
+    font-weight: 500;
+  }
+
+  .lede {
+    color: var(--text-2);
+    max-width: 660px;
+    line-height: 1.75;
+    margin: 0 0 3rem;
+    font-size: 1rem;
+  }
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+  .program-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--navy);
+    padding: 1.85rem;
+    transition: border-top-color 0.2s;
+  }
+  .program-card:hover {
+    border-top-color: var(--gold);
+  }
+  .program-icon {
+    color: var(--navy);
+    margin-bottom: 1.1rem;
+  }
+  .program-card h3 {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--navy);
+  }
+  .program-card p {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .quote-band {
+    background: var(--tint);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2rem);
+  }
+  .quote-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .quote-band blockquote {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+    color: var(--navy);
+    max-width: 700px;
+    margin: 0 auto 1.25rem;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  .quote-band cite {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: normal;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .goal {
+    border-left: 3px solid var(--gold);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+  }
+  .goal-num {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .goal p {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    margin: 0.35rem 0 0;
+    line-height: 1.6;
+  }
+
+  .cta-title {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 500;
+    margin: 0 auto 1rem;
+    max-width: 560px;
+    color: #fff;
+  }
+  .cta-sub {
+    margin: 0 auto 2rem;
+    max-width: 520px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+  }
+</style>

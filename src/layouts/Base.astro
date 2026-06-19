@@ -1,0 +1,383 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_URL, ORG_EMAIL } from '../config.js';
+
+const {
+  title,
+  description = 'CaribHealth Foundation is a Connecticut 501(c)(3) nonprofit improving access to high-quality medical care, equipment, and training for underserved communities across the Caribbean.',
+  path = '',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // "/CaribHealth"
+const fullTitle = `${title} | CaribHealth Foundation`;
+const canonical = `${SITE_URL}/${path}`.replace(/\/+$/, path === '' ? '/' : '');
+const ogImage = `${base}/assets/logo.png`;
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: 'CaribHealth Foundation',
+  legalName: 'CaribHealth Foundation, Inc.',
+  identifier: '99-2604475',
+  url: `${SITE_URL}/`,
+  email: ORG_EMAIL,
+  foundingDate: '2024-03',
+  description:
+    'A Connecticut 501(c)(3) charitable organization improving access to high-quality medical care for underserved communities across the Caribbean.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Orange',
+    addressRegion: 'CT',
+    addressCountry: 'US',
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CaribHealth Foundation" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#0a1f3d" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon-32.png`} />
+    <link rel="manifest" href={`${base}/site.webmanifest`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(orgJsonLd)}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <Nav />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --navy: #0a1f3d;
+    --navy-2: #11294a;
+    --navy-ink: #1b3766;
+    --gold: #b8860b;
+    --text: #1f2937;
+    --text-2: #374151;
+    --muted: #6b7280;
+    --faint: #9ca3af;
+    --bg: #fbfbfa;
+    --tint: #f4f7fb;
+    --tint-2: #f9fafb;
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+    --border-tint: #d7e0ee;
+    --amber-bg: #fff7ed;
+    --amber-border: #fdba74;
+    --amber-text: #9a3412;
+    --serif: 'IBM Plex Serif', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --maxw: 1100px;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+  }
+
+  a {
+    color: var(--navy-ink);
+  }
+
+  /* Skip link — visually hidden until focused */
+  .skip-link {
+    position: absolute;
+    left: 0.75rem;
+    top: -3rem;
+    z-index: 200;
+    background: var(--navy);
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 0 0 4px 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: top 0.15s ease;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* Visible focus states everywhere */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  /* ---- Shared layout primitives ---- */
+  .container {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: clamp(1.25rem, 4vw, 2rem);
+    padding-right: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .section {
+    padding-top: clamp(3rem, 5vw, 5rem);
+    padding-bottom: clamp(3rem, 5vw, 5rem);
+  }
+
+  /* Page header band (non-home pages) */
+  .page-band {
+    background: var(--tint);
+    border-bottom: 1px solid var(--border);
+    padding: clamp(2.5rem, 4vw, 4rem) clamp(1.25rem, 4vw, 2rem)
+      clamp(2.25rem, 4vw, 3.5rem);
+  }
+  .breadcrumb {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .breadcrumb .sep {
+    color: var(--faint);
+    margin: 0 0.4rem;
+  }
+  .breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--navy);
+  }
+  .page-band h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+    font-weight: 500;
+    color: var(--navy);
+    margin: 0 0 0.85rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .page-band .intro {
+    max-width: 660px;
+    color: var(--text-2);
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--navy-ink);
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin-right: 0.6rem;
+  }
+
+  h2.section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    font-weight: 500;
+    line-height: 1.25;
+    margin: 0 0 1.1rem;
+    color: var(--navy);
+    letter-spacing: -0.015em;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.85rem 1.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition:
+      background 0.18s,
+      color 0.18s,
+      border-color 0.18s;
+    text-align: center;
+  }
+  .btn-gold {
+    background: var(--gold);
+    color: #fff;
+  }
+  .btn-gold:hover {
+    background: #997209;
+  }
+  .btn-navy {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn-navy:hover {
+    background: var(--navy-2);
+  }
+  .btn-outline {
+    background: #fff;
+    color: var(--navy);
+    border-color: var(--navy);
+  }
+  .btn-outline:hover {
+    background: var(--navy);
+    color: #fff;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+  .btn-ghost:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Amber placeholder banners */
+  .amber-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 4px;
+    padding: 1rem 1.15rem;
+    color: var(--amber-text);
+    line-height: 1.55;
+    font-size: 0.88rem;
+  }
+  .amber-tag {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--amber-text);
+    color: var(--amber-bg);
+    border-radius: 3px;
+    padding: 0.22rem 0.55rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .amber-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+  }
+  .amber-pill .label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber-text);
+  }
+  .amber-pill .note {
+    font-size: 0.76rem;
+    color: var(--amber-text);
+  }
+
+  /* Cards */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  /* Navy CTA panel */
+  .cta-panel {
+    background: linear-gradient(135deg, var(--navy), var(--navy-2));
+    color: #fff;
+    border-radius: 4px;
+    padding: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  /* Pill tags (programs etc.) */
+  .tag {
+    font-size: 0.78rem;
+    color: var(--navy-ink);
+    background: var(--tint);
+    border: 1px solid var(--border-tint);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+  }
+</style>

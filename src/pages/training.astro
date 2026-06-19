@@ -1,0 +1,209 @@
+---
+import Base from '../layouts/Base.astro';
+
+// -----------------------------------------------------------------------------
+// To publish real training videos, add objects to `videos` below using each
+// YouTube video's ID (the part after `watch?v=` in the URL). Any item without a
+// `youtubeId` renders as a "Coming soon" placeholder card. Delete the
+// placeholder entries once you have real videos.
+//
+// Example with a real video:
+//   { youtubeId: 'dQw4w9WgXcQ', category: 'Endoscopy',
+//     title: 'Upper GI Endoscopy Basics',
+//     desc: 'An introduction to upper endoscopy technique.' },
+// -----------------------------------------------------------------------------
+const videos = [
+  {
+    youtubeId: null,
+    title: 'Training Video 1',
+    desc: 'This slot will be filled with an upcoming training video from Dr. Ketwaroo.',
+  },
+  {
+    youtubeId: null,
+    title: 'Training Video 2',
+    desc: 'This slot will be filled with an upcoming training video from Dr. Ketwaroo.',
+  },
+  {
+    youtubeId: null,
+    title: 'Training Video 3',
+    desc: 'This slot will be filled with an upcoming training video from Dr. Ketwaroo.',
+  },
+];
+---
+
+<Base
+  title="Training Videos"
+  path="training"
+  description="Educational resources from CaribHealth Foundation physicians to support healthcare workers across the Caribbean."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={import.meta.env.BASE_URL.replace(/\/$/, '')}>Home</a><span class="sep">/</span>Training
+      </nav>
+      <h1>Training Videos</h1>
+      <p class="intro">
+        Educational resources from CaribHealth Foundation physicians to support
+        healthcare workers across the Caribbean.
+      </p>
+    </div>
+  </div>
+
+  <section class="container section">
+    <div class="video-grid">
+      {
+        videos.map((v) => (
+          <article class="video-card">
+            <div class="video-embed">
+              {
+                v.youtubeId ? (
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}`}
+                    title={v.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="video-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Video coming soon
+                  </div>
+                )
+              }
+            </div>
+            <div class="video-info">
+              {
+                v.youtubeId ? (
+                  v.category && <span class="video-tag">{v.category}</span>
+                ) : (
+                  <span class="coming-soon-badge">Coming Soon</span>
+                )
+              }
+              <h2>{v.title}</h2>
+              <p>{v.desc}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="upload-cta">
+      <h2>More videos coming soon</h2>
+      <p>
+        Training content is being prepared by CaribHealth Foundation physicians.
+        Check back for updates.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+  .video-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s;
+  }
+  .video-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  .video-embed {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--navy);
+  }
+  .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    gap: 0.75rem;
+  }
+  .video-placeholder svg {
+    opacity: 0.35;
+  }
+  .video-info {
+    padding: 1rem 1.25rem 1.25rem;
+  }
+  .video-info h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 0.3rem;
+    line-height: 1.35;
+    font-family: var(--sans);
+  }
+  .video-info p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+  }
+  .video-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    background: #fef9ec;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .coming-soon-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    background: #f3f4f6;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-cta {
+    background: #f0f4ff;
+    border: 1px dashed #93aade;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .upload-cta h2 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin: 0 0 0.4rem;
+    font-weight: 600;
+  }
+  .upload-cta p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0;
+  }
+</style>

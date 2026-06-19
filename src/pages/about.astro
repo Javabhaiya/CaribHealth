@@ -1,0 +1,218 @@
+---
+import Base from '../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const principles = [
+  {
+    n: '01',
+    title: 'Patient dignity',
+    body: 'Every patient is entitled to respectful, evidence-based care regardless of geography or means.',
+  },
+  {
+    n: '02',
+    title: 'Local partnership',
+    body: 'We work alongside local clinicians and community health workers. Our role is to support and strengthen, not to replace.',
+  },
+  {
+    n: '03',
+    title: 'Financial transparency',
+    body: 'Program outcomes and financials are made available to the public. Donor trust is foundational to our work.',
+  },
+  {
+    n: '04',
+    title: 'Evidence-based practice',
+    body: 'Our clinical and educational programs follow established standards of care and are continuously evaluated.',
+  },
+];
+
+const facts = [
+  { k: 'Legal Name', v: 'CaribHealth Foundation, Inc.' },
+  { k: 'Tax Status', v: '501(c)(3) · EIN 99-2604475' },
+  { k: 'Incorporated', v: 'Connecticut · March 2024' },
+  { k: 'Principal Office', v: 'Orange, New Haven County, CT' },
+  { k: 'Fiscal Year', v: 'January 1 – December 31' },
+  { k: 'Classification', v: 'Grantmaking & Giving (NAICS 813219)' },
+];
+---
+
+<Base
+  title="About"
+  path="about"
+  description="A Connecticut 501(c)(3) charitable organization, incorporated in 2024 to facilitate access to high-quality medical care across the Caribbean."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>About
+      </nav>
+      <h1>About CaribHealth Foundation</h1>
+      <p class="intro">
+        A Connecticut 501(c)(3) charitable organization, incorporated in 2024 to
+        facilitate and promote access to high-quality medical care across the
+        Caribbean &mdash; with a focus on underserved and indigent populations.
+      </p>
+    </div>
+  </div>
+
+  <section class="container section">
+    <div class="two-col">
+      <div>
+        <p class="eyebrow">Our Mission</p>
+        <h2 class="section-title" style="font-size:clamp(1.5rem,2.6vw,1.95rem);">
+          Reducing disparities in specialty care.
+        </h2>
+        <p class="body-p">
+          CaribHealth Foundation exists to close a measurable gap: across much of
+          the Caribbean, conditions routinely managed in higher-resource settings
+          go undiagnosed or untreated for years. Our model focuses on direct
+          clinical service, the equipment to sustain it, and the training and
+          grants that build lasting local capacity.
+        </p>
+        <p class="body-p">
+          The Foundation grew from the clinical observations of its founder,
+          gastroenterologist Dr. Gyanprakash Ketwaroo, during work in the region.
+          It was incorporated in Connecticut in March 2024 and recognized as a
+          501(c)(3) tax-exempt organization the same year.
+        </p>
+        <p class="body-p" style="margin-bottom:0;">
+          We are a small organization by design &mdash; keeping administrative
+          costs minimal so that resources reach patients and partner providers.
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">Our Principles</p>
+        <h2 class="section-title" style="font-size:clamp(1.5rem,2.6vw,1.95rem);margin-bottom:1.75rem;">
+          What guides our work.
+        </h2>
+        {
+          principles.map((p, i) => (
+            <div class={i < principles.length - 1 ? 'principle bordered' : 'principle'}>
+              <h3>
+                <span class="pnum">{p.n}</span> {p.title}
+              </h3>
+              <p>{p.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="facts-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <p class="eyebrow" style="margin-bottom:1.75rem;">Organization Facts</p>
+      <div class="facts-grid">
+        {
+          facts.map((f) => (
+            <div>
+              <div class="fact-k">{f.k}</div>
+              <div class="fact-v">{f.v}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <section class="container" style="padding:clamp(3rem,5vw,4.5rem) clamp(1.25rem,4vw,2rem);">
+    <div class="cta-panel cta-split">
+      <div style="max-width:560px;">
+        <h2 class="cta-h">See exactly how your support is put to work.</h2>
+        <p class="cta-p">
+          Explore the four programs that turn contributions into care, equipment,
+          and trained providers across the Caribbean.
+        </p>
+      </div>
+      <a href={`${base}/programs`} class="btn btn-gold" style="white-space:nowrap;">View Programs</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .body-p {
+    color: var(--text-2);
+    line-height: 1.75;
+    margin: 0 0 1.1rem;
+    font-size: 0.97rem;
+  }
+  .principle {
+    padding: 1.25rem 0;
+  }
+  .principle.bordered {
+    border-bottom: 1px solid var(--border);
+  }
+  .principle h3 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .pnum {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .principle p {
+    color: var(--text-2);
+    line-height: 1.65;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+
+  .facts-band {
+    background: var(--tint-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: clamp(2.75rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2rem);
+  }
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .fact-k {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .fact-v {
+    font-size: 0.95rem;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .cta-split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .cta-h {
+    font-family: var(--serif);
+    color: #fff;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    margin: 0 0 0.6rem;
+  }
+  .cta-p {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>

@@ -1,0 +1,457 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { ORG_EMAIL, FORM_ACCESS_KEY, isConfigured } from '../config.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const formReady = isConfigured(FORM_ACCESS_KEY);
+
+// Reason options. `key` maps to the ?reason= deep-link param used by other pages.
+const reasons = [
+  { key: 'volunteer', label: 'Clinical volunteer inquiry' },
+  { key: 'partnership', label: 'Institutional partnership' },
+  { key: 'donation', label: 'Donation inquiry' },
+  { key: 'board', label: 'Board membership inquiry' },
+  { key: 'testimonial', label: 'Submit a testimonial' },
+  { key: 'packet', label: 'Request information packet' },
+  { key: 'media', label: 'Media or press' },
+  { key: 'general', label: 'General inquiry' },
+];
+---
+
+<Base
+  title="Contact"
+  path="contact"
+  description="Contact CaribHealth Foundation about volunteering, partnerships, donations, board membership, or media. We respond within two business days."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>Contact
+      </nav>
+      <h1>Contact us</h1>
+      <p class="intro">
+        For inquiries about volunteering, partnerships, donations, board
+        membership, or media &mdash; use the form below or the details provided.
+      </p>
+    </div>
+  </div>
+
+  <section class="container section">
+    <div class="contact-grid">
+      <!-- Contact info -->
+      <div>
+        <h2 class="info-h">Contact information</h2>
+        <p class="info-p">
+          We aim to respond to all inquiries within two business days. For urgent
+          partnership or media matters, please indicate so in your message.
+        </p>
+
+        <div class="info-row">
+          <span class="info-icon"><Icon name="mail" size={18} stroke={1.8} /></span>
+          <div>
+            <div class="info-k">Email</div>
+            <div class="info-v">{ORG_EMAIL}</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon"><Icon name="clock" size={18} stroke={1.8} /></span>
+          <div>
+            <div class="info-k">Response Time</div>
+            <div class="info-v">Within 2 business days</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon"><Icon name="map-pin" size={18} stroke={1.8} /></span>
+          <div>
+            <div class="info-k">Principal Office</div>
+            <div class="info-v">
+              Orange, Connecticut, USA<br />
+              <span class="info-muted">Programs across the Caribbean</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-row last">
+          <span class="info-icon"><Icon name="file-text" size={18} stroke={1.8} /></span>
+          <div>
+            <div class="info-k">Tax ID</div>
+            <div class="info-v">501(c)(3) &middot; EIN 99-2604475</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div>
+        <form
+          id="contact-form"
+          method="POST"
+          action="https://api.web3forms.com/submit"
+          data-ready={formReady ? 'true' : 'false'}
+        >
+          {formReady && <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />}
+          <input type="hidden" name="subject" value="New contact inquiry — CaribHealth Foundation" />
+          <input type="hidden" name="from_name" value="CaribHealth Foundation website" />
+          <!-- honeypot -->
+          <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+          <div class="field">
+            <label for="c-name">Full name <span class="req">*</span></label>
+            <input type="text" id="c-name" name="name" placeholder="First and last name" />
+            <p class="field-error" data-error-for="c-name" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="c-email">Email address <span class="req">*</span></label>
+            <input type="email" id="c-email" name="email" placeholder="you@example.com" />
+            <p class="field-error" data-error-for="c-email" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="c-org">Organization <span class="optional">(optional)</span></label>
+            <input type="text" id="c-org" name="organization" placeholder="Hospital, clinic, university, or company" />
+          </div>
+
+          <div class="field">
+            <label for="c-reason">Reason for inquiry <span class="req">*</span></label>
+            <select id="c-reason" name="reason">
+              {reasons.map((r) => <option value={r.label} data-key={r.key}>{r.label}</option>)}
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="c-message">Message <span class="req">*</span></label>
+            <textarea id="c-message" name="message" placeholder="Please provide relevant details about your inquiry…"></textarea>
+            <p class="field-error" data-error-for="c-message" role="alert" hidden></p>
+          </div>
+
+          {
+            !formReady && (
+              <div class="config-note">
+                <strong>Configure the contact form.</strong> Set
+                <code>FORM_ACCESS_KEY</code> in <code>src/config.js</code> with a
+                free key from web3forms.com. Until then, submissions are validated
+                but not sent.
+              </div>
+            )
+          }
+
+          <button type="submit" class="submit-btn">Submit Inquiry</button>
+          <p class="consent-note">
+            By submitting, you consent to being contacted regarding your inquiry.
+            We do not share contact information with third parties.
+          </p>
+        </form>
+
+        <div class="success-card" id="success-card" hidden>
+          <div class="success-icon" aria-hidden="true">&#10003;</div>
+          <h2>Your inquiry has been received.</h2>
+          <p>
+            Thank you, <strong id="success-name"></strong>. A member of our team
+            will respond to <strong id="success-email"></strong> within two
+            business days.
+          </p>
+          <button type="button" class="btn btn-outline" id="reset-btn" style="font-size:0.88rem;padding:0.7rem 1.5rem;">
+            Send another inquiry
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .info-h {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 1rem;
+  }
+  .info-p {
+    font-size: 0.95rem;
+    color: var(--text-2);
+    line-height: 1.75;
+    margin: 0 0 2rem;
+  }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-row.last {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .info-icon {
+    color: var(--navy);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: inline-flex;
+  }
+  .info-k {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+  .info-v {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .info-muted {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .field {
+    margin-bottom: 1.1rem;
+  }
+  .field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text-2);
+  }
+  .req {
+    color: var(--gold);
+  }
+  .optional {
+    color: var(--faint);
+    font-weight: 400;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    font-size: 0.92rem;
+    padding: 0.7rem 0.9rem;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--navy);
+  }
+  .field textarea {
+    height: 140px;
+    resize: vertical;
+    font-family: inherit;
+  }
+  .field input.invalid,
+  .field textarea.invalid {
+    border-color: #d9534f;
+  }
+  .field-error {
+    font-size: 0.78rem;
+    color: #d9534f;
+    margin: 0.35rem 0 0;
+  }
+
+  .config-note {
+    margin-bottom: 1.1rem;
+    padding: 0.85rem 1rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 4px;
+    font-size: 0.83rem;
+    color: #3730a3;
+    line-height: 1.55;
+  }
+  .config-note code {
+    background: rgba(55, 48, 163, 0.1);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+  }
+
+  .submit-btn {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+  }
+  .submit-btn:hover {
+    background: var(--navy-2);
+  }
+  .consent-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 1rem 0 0;
+    line-height: 1.55;
+  }
+
+  .success-card {
+    background: #f0f9f4;
+    border: 1px solid #c5e7d3;
+    border-radius: 6px;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    text-align: center;
+  }
+  .success-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #c5e7d3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.1rem;
+    color: #1e6e4d;
+    font-size: 1.4rem;
+  }
+  .success-card h2 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    color: var(--navy);
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  .success-card p {
+    font-size: 0.92rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin: 0 auto 1.5rem;
+    max-width: 380px;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form');
+  if (form) {
+    const nameEl = document.getElementById('c-name');
+    const emailEl = document.getElementById('c-email');
+    const reasonEl = document.getElementById('c-reason');
+    const messageEl = document.getElementById('c-message');
+    const successCard = document.getElementById('success-card');
+    const successName = document.getElementById('success-name');
+    const successEmail = document.getElementById('success-email');
+    const resetBtn = document.getElementById('reset-btn');
+    const ready = form.dataset.ready === 'true';
+    const emailRe = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    // Pre-select reason from ?reason= query param.
+    const params = new URLSearchParams(window.location.search);
+    const reasonKey = params.get('reason');
+    if (reasonKey) {
+      const opt = Array.from(reasonEl.options).find(
+        (o) => o.dataset.key === reasonKey
+      );
+      if (opt) reasonEl.value = opt.value;
+    }
+
+    const setError = (el, msg) => {
+      const p = form.querySelector(`[data-error-for="${el.id}"]`);
+      if (msg) {
+        el.classList.add('invalid');
+        if (p) {
+          p.textContent = msg;
+          p.hidden = false;
+        }
+      } else {
+        el.classList.remove('invalid');
+        if (p) p.hidden = true;
+      }
+    };
+
+    const validate = () => {
+      let ok = true;
+      if (!nameEl.value.trim()) {
+        setError(nameEl, 'Please enter your name.');
+        ok = false;
+      } else setError(nameEl, '');
+
+      if (!emailRe.test(emailEl.value.trim())) {
+        setError(emailEl, 'Please enter a valid email address.');
+        ok = false;
+      } else setError(emailEl, '');
+
+      if (!messageEl.value.trim() || messageEl.value.trim().length < 10) {
+        setError(messageEl, 'Please share a few details (at least 10 characters).');
+        ok = false;
+      } else setError(messageEl, '');
+
+      return ok;
+    };
+
+    const showSuccess = () => {
+      successName.textContent = nameEl.value.trim();
+      successEmail.textContent = emailEl.value.trim();
+      form.hidden = true;
+      successCard.hidden = false;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      if (!validate()) {
+        e.preventDefault();
+        return;
+      }
+
+      if (!ready) {
+        e.preventDefault();
+        setError(
+          messageEl,
+          'Contact form is not connected yet. Set FORM_ACCESS_KEY in src/config.js.'
+        );
+        return;
+      }
+
+      // Submit via fetch so we can show the inline success card.
+      e.preventDefault();
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          showSuccess();
+        } else {
+          setError(messageEl, 'Something went wrong. Please try again.');
+        }
+      } catch (_) {
+        setError(messageEl, 'Network error. Please try again.');
+      }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        form.hidden = false;
+        successCard.hidden = true;
+      });
+    }
+  }
+</script>

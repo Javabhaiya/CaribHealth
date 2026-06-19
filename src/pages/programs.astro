@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const programs = [
+  {
+    n: '01',
+    title: 'Medical Missions',
+    tagline: 'Direct, hands-on care at partner sites.',
+    icon: 'heart-pulse',
+    body: 'Volunteer clinical teams travel to partner sites across the Caribbean to deliver screenings, consultations, and procedures — with founding strength in digestive health and endoscopy. Every mission pairs visiting specialists with local providers so that knowledge stays in the community after the team departs.',
+    tags: ['GI screening & endoscopy', 'Consultations', 'Bedside teaching'],
+  },
+  {
+    n: '02',
+    title: 'Equipment Donation',
+    tagline: 'The tools that make care possible.',
+    icon: 'briefcase-medical',
+    body: 'We source, refurbish, and ship endoscopic and diagnostic equipment, medications, and supplies to clinics operating with limited infrastructure. On-site installation and orientation ensure that donated equipment is used safely and stays in service.',
+    tags: ['Endoscopy systems', 'Diagnostics', 'Consumables'],
+  },
+  {
+    n: '03',
+    title: 'Training & Education',
+    tagline: 'Building lasting local capacity.',
+    icon: 'graduation-cap',
+    body: 'Workshops and continuing education equip local clinicians and community health workers to recognize, triage, and refer digestive and other conditions earlier. Training is delivered alongside missions and as standalone sessions, with curricula adapted to each partner site.',
+    tags: ['Symptom recognition', 'Triage & referral', 'Procedure technique'],
+  },
+  {
+    n: '04',
+    title: 'Training Grants',
+    tagline: 'Investing in the next generation.',
+    icon: 'shield-check',
+    body: 'Grants support the education and training of medical professionals who serve — or are preparing to serve — communities across the Caribbean. By funding the people who stay, we extend the impact of every mission far beyond a single visit.',
+    tags: ['Continuing education', 'Specialty training', 'Caribbean-wide'],
+  },
+];
+---
+
+<Base
+  title="Programs"
+  path="programs"
+  description="Four interlocking programs — medical missions, equipment donation, training & education, and training grants — turn contributions into care across the Caribbean."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>Programs
+      </nav>
+      <h1>Our programs</h1>
+      <p class="intro">
+        Four interlocking programs &mdash; defined in our charter &mdash; turn
+        contributions into direct care, durable infrastructure, and a stronger
+        local health workforce across the Caribbean.
+      </p>
+    </div>
+  </div>
+
+  <section class="container" style="padding:clamp(3rem,5vw,4.5rem) clamp(1.25rem,4vw,2rem);display:flex;flex-direction:column;gap:1.5rem;">
+    {
+      programs.map((p) => (
+        <div class="prog-row">
+          <div class="prog-left">
+            <div class="prog-num">Program {p.n}</div>
+            <div class="prog-icon">
+              <Icon name={p.icon} size={34} stroke={1.4} />
+            </div>
+            <h2 class="prog-title">{p.title}</h2>
+            <p class="prog-tag">{p.tagline}</p>
+          </div>
+          <div class="prog-right">
+            <p class="prog-body">{p.body}</p>
+            <div class="prog-pills">
+              {p.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="container" style="padding:0 clamp(1.25rem,4vw,2rem) clamp(3.5rem,6vw,5rem);">
+    <div class="closing">
+      <div style="max-width:560px;">
+        <p class="eyebrow" style="margin-bottom:0.75rem;">Ready When You Are</p>
+        <h2 class="closing-h">Fund a program or join a mission.</h2>
+        <p class="closing-p">
+          Whether you give, volunteer clinical time, or partner an institution,
+          there is a clear way to plug in.
+        </p>
+      </div>
+      <div class="closing-btns">
+        <a href={`${base}/donate`} class="btn btn-gold" style="padding:0.8rem 1.6rem;">Donate</a>
+        <a href={`${base}/missions`} class="btn btn-outline" style="padding:0.8rem 1.6rem;">View Missions</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prog-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  .prog-left {
+    background: var(--navy);
+    color: #fff;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .prog-num {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  .prog-icon {
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+  .prog-title {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    color: #fff;
+  }
+  .prog-tag {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .prog-right {
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+  }
+  .prog-body {
+    color: var(--text-2);
+    line-height: 1.75;
+    font-size: 0.97rem;
+    margin: 0 0 1.25rem;
+  }
+  .prog-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .closing {
+    background: var(--tint);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: clamp(2rem, 4vw, 3rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .closing-h {
+    font-family: var(--serif);
+    color: var(--navy);
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  .closing-p {
+    color: var(--text-2);
+    line-height: 1.7;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .closing-btns {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>
