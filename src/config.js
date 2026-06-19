@@ -1,8 +1,8 @@
 // =============================================================================
 // CaribHealth Foundation — site configuration
 // Fill in these values before going live. Each has a free, static-site-friendly
-// provider. Until they are set, the donate / contact / newsletter forms fall
-// back to a clear "not configured yet" message instead of silently failing.
+// provider. Until they are set, the donate / contact forms fall back to a clear
+// "not configured yet" message instead of silently failing.
 // =============================================================================
 
 // Canonical production URL (no trailing slash). Used for SEO meta + JSON-LD.
@@ -26,14 +26,6 @@ export const DONATION_PROVIDER_URL = 'PASTE_ZEFFY_OR_GIVEBUTTER_URL_HERE';
 // emailed to you). Paste it below; the contact form POSTs to Web3Forms.
 // -----------------------------------------------------------------------------
 export const FORM_ACCESS_KEY = 'PASTE_WEB3FORMS_ACCESS_KEY_HERE';
-
-// -----------------------------------------------------------------------------
-// Newsletter
-// Either reuse a Web3Forms access key (it will email you each signup) OR paste a
-// Mailchimp / Buttondown / Beehiiv embed POST URL. If it looks like a URL the
-// footer form POSTs to it directly; otherwise it is treated as a Web3Forms key.
-// -----------------------------------------------------------------------------
-export const NEWSLETTER_ENDPOINT = 'PASTE_NEWSLETTER_ENDPOINT_HERE';
 
 // Convenience flags used by the UI to decide whether a provider is wired up.
 export const isConfigured = (v) =>

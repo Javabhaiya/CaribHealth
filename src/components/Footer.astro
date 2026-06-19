@@ -1,14 +1,7 @@
 ---
-import { ORG_EMAIL, NEWSLETTER_ENDPOINT, isConfigured } from '../config.js';
+import { ORG_EMAIL } from '../config.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const newsletterReady = isConfigured(NEWSLETTER_ENDPOINT);
-// If the value looks like a URL, POST to it directly; otherwise treat it as a
-// Web3Forms access key and POST to the Web3Forms endpoint.
-const newsletterIsUrl = /^https?:\/\//.test(NEWSLETTER_ENDPOINT);
-const newsletterAction = newsletterIsUrl
-  ? NEWSLETTER_ENDPOINT
-  : 'https://api.web3forms.com/submit';
 ---
 
 <footer>
@@ -16,45 +9,15 @@ const newsletterAction = newsletterIsUrl
     <div class="foot-grid">
       <div class="brand-col">
         <div class="brand-row">
-          <span class="cbox" aria-hidden="true">C</span>
+          <span class="foot-logo" aria-hidden="true">
+            <img src={`${base}/assets/logo.webp`} width="112" height="120" alt="" />
+          </span>
           <h2 class="brand-name">CaribHealth Foundation</h2>
         </div>
         <p class="brand-desc">
           A 501(c)(3) charitable organization improving access to high-quality
           medical care for underserved communities across the Caribbean.
         </p>
-
-        <form
-          class="newsletter"
-          id="newsletter-form"
-          method="POST"
-          action={newsletterAction}
-          data-ready={newsletterReady ? 'true' : 'false'}
-        >
-          <label class="nl-label" for="nl-email">Get mission updates</label>
-          {
-            !newsletterIsUrl && (
-              <input type="hidden" name="access_key" value={NEWSLETTER_ENDPOINT} />
-            )
-          }
-          <input type="hidden" name="subject" value="New newsletter signup — CaribHealth" />
-          <input type="hidden" name="from_name" value="CaribHealth Newsletter" />
-          <div class="nl-row">
-            <input
-              type="email"
-              id="nl-email"
-              name="email"
-              placeholder="you@example.com"
-              aria-label="Email address for newsletter"
-              required
-            />
-            <button type="submit">Subscribe</button>
-          </div>
-          <p class="nl-error" id="nl-error" role="alert" hidden></p>
-          <p class="nl-done" id="nl-done" hidden>
-            &#10003; You&rsquo;re subscribed &mdash; thank you for following our work.
-          </p>
-        </form>
       </div>
 
       <div class="link-col">
@@ -69,7 +32,7 @@ const newsletterAction = newsletterIsUrl
         <h2 class="col-head">Engage</h2>
         <a href={`${base}/donate`}>Donate</a>
         <a href={`${base}/contact?reason=volunteer`}>Volunteer</a>
-        <a href={`${base}/missions`}>Missions &amp; Events</a>
+        <a href={`${base}/training`}>Training</a>
         <a href={`${base}/contact`}>Contact</a>
       </div>
     </div>
@@ -107,21 +70,19 @@ const newsletterAction = newsletterIsUrl
     gap: 0.6rem;
     margin-bottom: 0.85rem;
   }
-  .cbox {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    background: #fff;
-    border-radius: 4px;
-    border-bottom: 3px solid var(--gold);
-    color: var(--navy);
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
+  .foot-logo {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px 9px;
+  }
+  .foot-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
   }
   .brand-name {
     font-family: var(--serif);
@@ -135,58 +96,6 @@ const newsletterAction = newsletterIsUrl
     line-height: 1.65;
     font-size: 0.85rem;
     margin: 0 0 1.25rem;
-  }
-
-  .nl-label {
-    display: block;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 0.5rem;
-  }
-  .nl-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-  .newsletter input[type='email'] {
-    flex: 1;
-    min-width: 160px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 3px;
-    color: #fff;
-    padding: 0.6rem 0.75rem;
-    font-size: 0.85rem;
-    outline: none;
-  }
-  .newsletter input[type='email']::placeholder {
-    color: rgba(255, 255, 255, 0.45);
-  }
-  .newsletter button {
-    background: var(--gold);
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.6rem 1.1rem;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .newsletter button:hover {
-    background: #997209;
-  }
-  .nl-error {
-    font-size: 0.78rem;
-    color: #f0a0a0;
-    margin: 0.5rem 0 0;
-  }
-  .nl-done {
-    font-size: 0.85rem;
-    color: var(--gold);
-    margin: 0;
   }
 
   .link-col {
@@ -234,68 +143,3 @@ const newsletterAction = newsletterIsUrl
   }
 </style>
 
-<script>
-  const form = document.getElementById('newsletter-form');
-  if (form) {
-    const emailInput = document.getElementById('nl-email');
-    const errEl = document.getElementById('nl-error');
-    const doneEl = document.getElementById('nl-done');
-    const ready = form.getAttribute('data-ready') === 'true';
-    const re = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-
-    const showError = (msg) => {
-      errEl.textContent = msg;
-      errEl.hidden = false;
-    };
-
-    form.addEventListener('submit', async (e) => {
-      errEl.hidden = true;
-      const email = emailInput.value.trim();
-      if (!re.test(email)) {
-        e.preventDefault();
-        showError('Please enter a valid email.');
-        return;
-      }
-
-      // Provider not configured yet → don't actually navigate; show guidance.
-      if (!ready) {
-        e.preventDefault();
-        showError(
-          'Newsletter signup is not connected yet. Set NEWSLETTER_ENDPOINT in src/config.js.'
-        );
-        return;
-      }
-
-      // Provider configured → submit via fetch so we can show inline success.
-      e.preventDefault();
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
-        });
-        if (res.ok) {
-          form.querySelector('.nl-label').hidden = true;
-          form.querySelector('.nl-row').hidden = true;
-          doneEl.hidden = false;
-          try {
-            localStorage.setItem('chf_newsletter', email);
-          } catch (_) {}
-        } else {
-          showError('Something went wrong. Please try again.');
-        }
-      } catch (_) {
-        showError('Network error. Please try again.');
-      }
-    });
-
-    // If already subscribed this session, reflect it.
-    try {
-      if (localStorage.getItem('chf_newsletter')) {
-        form.querySelector('.nl-label').hidden = true;
-        form.querySelector('.nl-row').hidden = true;
-        doneEl.hidden = false;
-      }
-    } catch (_) {}
-  }
-</script>
