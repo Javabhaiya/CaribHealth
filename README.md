@@ -39,9 +39,9 @@ src/
   assets/dr-ketwaroo.jpg   # board headshot, optimized at build via <Image>
   config.js                # ← paste your provider keys here (see below)
 public/
-  assets/logo.png          # full logo (served as-is; used for OG image)
-  favicon.svg / favicon-32.png
-  site.webmanifest / robots.txt / CNAME
+  assets/logo.webp         # optimized nav/footer logo (logo.png = OG image)
+  favicon-16/32.png, apple-touch-icon.png, favicon-192/512.png   # generated from logo
+  site.webmanifest / robots.txt   # CNAME added later, only for a custom domain
 _design-reference/         # original prototype + handoff spec (NOT part of the build)
 ```
 
@@ -118,9 +118,12 @@ top comment.
      output: 'static',
    });
    ```
-2. **`public/CNAME`** — replace the placeholder comment with your bare domain on
-   a single line, e.g. `www.caribhealthfoundation.org`.
-3. **`src/config.js`** — update `SITE_URL` to match.
+2. **`public/CNAME`** — create this file (it is intentionally absent until you
+   have a domain) containing **only** your bare domain on a single line, e.g.
+   `www.caribhealthfoundation.org`. A CNAME file with any other content (comments,
+   blank lines) breaks the GitHub Pages deploy.
+3. **`src/config.js`** — update `SITE_URL` to match. Also update the icon paths in
+   **`public/site.webmanifest`** (the `/CaribHealth/…` prefixes) to your new base.
 4. **DNS** — at your registrar, add a `CNAME` record pointing `www` to
    `javabhaiya.github.io` (and apex/`A` records per
    [GitHub's docs](https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site)).

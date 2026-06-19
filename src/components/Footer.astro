@@ -2,6 +2,7 @@
 import { ORG_EMAIL } from '../config.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const year = new Date().getFullYear();
 ---
 
 <footer>
@@ -39,7 +40,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <div class="foot-bottom">
       <p>
-        &copy; 2026 CaribHealth Foundation, Inc. &nbsp;&middot;&nbsp; 501(c)(3)
+        &copy; {year} CaribHealth Foundation, Inc. &nbsp;&middot;&nbsp; 501(c)(3)
         &nbsp;&middot;&nbsp; EIN 99-2604475 &nbsp;&middot;&nbsp; Orange, CT
       </p>
       <p><a href={`mailto:${ORG_EMAIL}`}>{ORG_EMAIL}</a></p>
