@@ -18,14 +18,14 @@ export const ORG_EMAIL = 'caribhealthfoundation@gmail.com';
 // URL below. The Donate page appends ?amount=&frequency=&dedication= as query
 // params so your provider can pre-fill them (most accept an `amount` param).
 // -----------------------------------------------------------------------------
-export const DONATION_PROVIDER_URL = 'PASTE_ZEFFY_OR_GIVEBUTTER_URL_HERE';
+export const DONATION_PROVIDER_URL = 'https://www.zeffy.com/en-US/donation-form/donate-to-change-lives-16431';
 
 // -----------------------------------------------------------------------------
 // Contact form
 // Get a free access key at https://web3forms.com (no account required — it is
 // emailed to you). Paste it below; the contact form POSTs to Web3Forms.
 // -----------------------------------------------------------------------------
-export const FORM_ACCESS_KEY = 'PASTE_WEB3FORMS_ACCESS_KEY_HERE';
+export const FORM_ACCESS_KEY = '9151d59b-be59-4334-b01f-0920a04a9e0a';
 
 // Convenience flags used by the UI to decide whether a provider is wired up.
 export const isConfigured = (v) =>

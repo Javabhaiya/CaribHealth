@@ -23,12 +23,70 @@ const governance = [
     body: 'The Treasurer maintains financial records and reports regularly to the board for review.',
   },
 ];
+
+const directors = [
+  {
+    name: 'Dr. Gyanprakash Ketwaroo, MD',
+    role: 'Founder, President & Chair',
+    img: drKetwaroo,
+    initials: 'GK',
+    tag: 'Gastroenterology · Academic Medicine',
+    bio: 'Board-certified gastroenterologist whose clinical work in the region inspired the Foundation. Provides medical direction, leads clinical partnerships, and serves as the registered agent.',
+    interim: false,
+  },
+  {
+    name: 'Wellington Phillips',
+    role: 'Vice President',
+    img: null,
+    initials: 'WP',
+    tag: '',
+    bio: 'Supports the Foundation through strategy, partnership development, and oversight of program operations across the Caribbean.',
+    interim: true,
+  },
+  {
+    name: 'Dr. Pamela Ketwaroo, MD',
+    role: 'Board Member',
+    img: null,
+    initials: 'PK',
+    tag: 'Radiology · Pediatric & Fetal Imaging',
+    bio: `Associate Professor of Radiology at Baylor College of Medicine and a Staff Radiologist at Texas Children's Hospital, specializing in fetal imaging, congenital heart disease, and cardiac MRI techniques. She earned her medical degree at the University of Texas Health Science Center at San Antonio, completed her residency at Harvard Medical School / Brigham & Women's Hospital, and fellowships at Boston Children's Hospital and Baylor College of Medicine.`,
+    quote: `It is a privilege to be part of a multi-disciplinary team caring for children and their families. In that capacity, I strive to have a positive impact and improve patient outcomes in both the pre-natal and post-natal settings.`,
+    interim: false,
+  },
+  {
+    name: 'Dr. Balichand Permashwar, MD',
+    role: 'Board Member',
+    img: null,
+    initials: 'BP',
+    tag: '',
+    bio: "Contributes clinical and governance expertise in support of the Foundation's mission across the Caribbean.",
+    interim: true,
+  },
+  {
+    name: 'Dr. Ronald Dixon, MD',
+    role: 'Board Member',
+    img: null,
+    initials: 'RD',
+    tag: '',
+    bio: 'Serves on the board with responsibility for governance and financial stewardship, helping ensure the Foundation operates in accordance with its 501(c)(3) obligations.',
+    interim: true,
+  },
+  {
+    name: 'Dahlia Phillips',
+    role: 'Board Member',
+    img: null,
+    initials: 'DP',
+    tag: '',
+    bio: "Supports the Foundation's governance and community engagement initiatives.",
+    interim: true,
+  },
+];
 ---
 
 <Base
   title="Board & Governance"
   path="board"
-  description="CaribHealth Foundation is governed by a board of three directors named in its founding charter, who set strategy, approve budgets, and oversee program performance."
+  description="CaribHealth Foundation is governed by a volunteer board of directors who set strategy, approve budgets, and oversee program performance."
 >
   <div class="page-band">
     <div style="max-width:1100px;margin:0 auto;">
@@ -47,68 +105,45 @@ const governance = [
     <p class="eyebrow">Leadership</p>
     <h2 class="section-title">Governance and clinical direction.</h2>
     <p class="lede">
-      CaribHealth Foundation is governed by a board of three directors named in
-      its founding charter, who set strategy, approve budgets, and oversee
-      program performance.
+      CaribHealth Foundation is governed by a volunteer board of directors who
+      set strategy, approve budgets, and oversee program performance.
     </p>
     <div class="amber-banner" style="max-width:640px;margin:0 0 3rem;">
       <span class="amber-tag">Placeholder</span>
       <span>
-        Director <strong>names and roles are accurate</strong>; the biography
-        text below is interim placeholder copy, pending each director&rsquo;s
-        approved bio.
+        Director <strong>names and roles are accurate</strong>. Biographies
+        marked &ldquo;Interim&rdquo; are placeholder copy pending each
+        director&rsquo;s approved bio.
       </span>
     </div>
 
     <div class="board-grid">
-      <article class="director">
-        <Image
-          src={drKetwaroo}
-          alt="Dr. Gyanprakash Ketwaroo"
-          width={136}
-          height={136}
-          class="avatar-img"
-          loading="eager"
-        />
-        <div class="director-body">
-          <h3>Dr. Gyanprakash Ketwaroo, MD</h3>
-          <div class="role">Founder, President &amp; Chair</div>
-          <p>
-            Board-certified gastroenterologist whose clinical work in the region
-            inspired the Foundation. Provides medical direction, leads clinical
-            partnerships, and serves as the registered agent.
-          </p>
-          <div class="director-tag">Gastroenterology &middot; Academic Medicine</div>
-        </div>
-      </article>
-
-      <article class="director">
-        <div class="avatar-initials" aria-hidden="true">WP</div>
-        <div class="director-body">
-          <h3>Wellington Phillips</h3>
-          <div class="role">Director &amp; Co-Founder</div>
-          <p>
-            A founding trustee of the Foundation. Contributes to strategy,
-            partnership development, and oversight of program operations across
-            the Caribbean.
-          </p>
-          <div class="director-tag">Founding Trustee</div>
-        </div>
-      </article>
-
-      <article class="director">
-        <div class="avatar-initials" aria-hidden="true">RD</div>
-        <div class="director-body">
-          <h3>Ronald Dixon</h3>
-          <div class="role">Director</div>
-          <p>
-            Serves on the board with responsibility for governance and financial
-            stewardship, helping ensure the Foundation operates in accordance
-            with its 501(c)(3) obligations.
-          </p>
-          <div class="director-tag">Governance &amp; Stewardship</div>
-        </div>
-      </article>
+      {
+        directors.map((d) => (
+          <article class="director">
+            {d.img ? (
+              <Image
+                src={d.img}
+                alt={d.name}
+                width={136}
+                height={136}
+                class="avatar-img"
+                loading="eager"
+              />
+            ) : (
+              <div class="avatar-initials" aria-hidden="true">{d.initials}</div>
+            )}
+            <div class="director-body">
+              <h3>{d.name}</h3>
+              <div class="role">{d.role}</div>
+              <p>{d.bio}</p>
+              {d.quote && <p class="director-quote">&ldquo;{d.quote}&rdquo;</p>}
+              {d.tag && <div class="director-tag">{d.tag}</div>}
+              {d.interim && <div class="interim-note">Interim bio — pending approval</div>}
+            </div>
+          </article>
+        ))
+      }
     </div>
 
     <div class="govern-band">
@@ -217,6 +252,28 @@ const governance = [
     color: var(--muted);
     margin-top: 0.5rem;
     font-style: italic;
+  }
+  .director-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--navy);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0.75rem 0 0;
+    padding-left: 0.85rem;
+    border-left: 2px solid var(--gold);
+  }
+  .interim-note {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--amber-text);
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
   }
 
   .govern-band {

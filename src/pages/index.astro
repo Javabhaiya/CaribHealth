@@ -221,7 +221,7 @@ const goals = [
   }
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     padding-left: 0;
     padding-right: 0;
   }
@@ -231,6 +231,19 @@ const goals = [
   }
   .stat:last-child {
     border-right: none;
+  }
+  /* Clean 2x2 grid on tablet/mobile so labels never get cramped */
+  @media (max-width: 820px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat:nth-child(2) {
+      border-right: none;
+    }
+    .stat:nth-child(1),
+    .stat:nth-child(2) {
+      border-bottom: 1px solid var(--border);
+    }
   }
   .stat-num {
     font-family: var(--serif);
