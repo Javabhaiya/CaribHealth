@@ -23,10 +23,10 @@ const isActive = (href) => {
 <div class="topbar">
   <span class="topbar-status">
     <span class="diamond" aria-hidden="true">&#9670;</span>
-    501(c)(3) Nonprofit &nbsp;&middot;&nbsp; EIN 99-2604475 &nbsp;&middot;&nbsp;
-    Incorporated in Connecticut, 2024
+    501(c)(3) Nonprofit &nbsp;&middot;&nbsp; EIN 99-2604475<span class="topbar-extra">
+    &nbsp;&middot;&nbsp; Incorporated in Connecticut, 2024</span>
   </span>
-  <a href={`mailto:${ORG_EMAIL}`}>{ORG_EMAIL}</a>
+  <a href={`mailto:${ORG_EMAIL}`} class="topbar-email">{ORG_EMAIL}</a>
 </div>
 
 <header>
@@ -247,6 +247,20 @@ const isActive = (href) => {
     }
     .hamburger {
       display: flex;
+    }
+  }
+
+  /* Condense the top bar on phones: keep credibility (501c3 + EIN) on one line,
+     drop the incorporation note and email (both available in the footer/contact). */
+  @media (max-width: 600px) {
+    .topbar {
+      font-size: 0.72rem;
+      padding: 0.45rem clamp(1rem, 4vw, 2rem);
+      gap: 0.5rem;
+    }
+    .topbar-extra,
+    .topbar-email {
+      display: none;
     }
   }
 </style>
