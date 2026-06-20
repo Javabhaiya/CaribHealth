@@ -12,7 +12,7 @@ const {
 const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // "/CaribHealth"
 const fullTitle = `${title} | CaribHealth Foundation`;
 const canonical = `${SITE_URL}/${path}`.replace(/\/+$/, path === '' ? '/' : '');
-const ogImage = `${base}/assets/logo.png`;
+const ogImage = `${SITE_URL}/og-image.png`; // absolute URL required by social scrapers
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
