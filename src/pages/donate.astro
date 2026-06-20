@@ -1,10 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import { DONATION_PROVIDER_URL, isConfigured } from '../config.js';
+import { DONATION_PROVIDER_URL } from '../config.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const presets = [10, 25, 50, 100, 250, 500];
-const providerReady = isConfigured(DONATION_PROVIDER_URL);
+
+// Zeffy has no URL amount-prefill, so we embed the donation form inline for a
+// single-step give-and-pay experience. Derive the embed URL from the configured
+// Zeffy donation page URL (its last path segment is the form slug).
+const slug = DONATION_PROVIDER_URL.split('/').filter(Boolean).pop();
+const embedUrl = `https://www.zeffy.com/embed/donation-form/${slug}`;
 
 const moreWays = [
   {
@@ -59,79 +63,23 @@ const moreWays = [
         </div>
       </div>
 
-      <form class="donate-body" id="donate-form" data-provider-ready={providerReady ? 'true' : 'false'} data-provider-url={DONATION_PROVIDER_URL}>
-        <!-- Frequency toggle -->
-        <div class="freq-toggle" role="group" aria-label="Donation frequency">
-          <button type="button" class="freq active" data-freq="one-time" aria-pressed="true">One-time</button>
-          <button type="button" class="freq" data-freq="monthly" aria-pressed="false">Monthly</button>
+      <div class="donate-body">
+        <div class="zeffy-embed">
+          <iframe
+            title="CaribHealth Foundation secure donation form"
+            src={embedUrl}
+            allow="payment"
+            loading="lazy"
+          ></iframe>
         </div>
-
-        <!-- Amount presets -->
-        <span class="field-label" id="amount-label">Choose an amount</span>
-        <div class="amount-grid" role="group" aria-labelledby="amount-label">
-          {
-            presets.map((a) => (
-              <button
-                type="button"
-                class={a === 100 ? 'amount active' : 'amount'}
-                data-amount={a}
-                aria-pressed={a === 100 ? 'true' : 'false'}
-              >
-                ${a}
-              </button>
-            ))
-          }
-        </div>
-
-        <!-- Custom amount -->
-        <div class="custom-wrap" id="custom-wrap">
-          <span aria-hidden="true">$</span>
-          <label class="visually-hidden" for="custom-amount">Other amount</label>
-          <input type="text" id="custom-amount" inputmode="numeric" placeholder="Other amount" maxlength="7" />
-        </div>
-        <p class="field-error" id="amount-error" role="alert" hidden></p>
-
-        <!-- Dedicate -->
-        <label class="dedicate-row">
-          <input type="checkbox" id="dedicate-toggle" />
-          <span>Dedicate this gift in honor or memory of someone</span>
-        </label>
-        <div id="dedicate-field" hidden>
-          <label class="visually-hidden" for="dedicate-name">In honor of</label>
-          <input type="text" id="dedicate-name" placeholder="In honor of…" class="dedicate-input" />
-        </div>
-
-        <!-- Placeholder note -->
-        <div class="amber-banner" style="margin-top:1.5rem;font-size:0.83rem;">
-          <span class="amber-tag">Placeholder</span>
-          <span>
-            Example goal for layout &mdash; the $25,000 founding-campaign target
-            is illustrative, pending the board&rsquo;s confirmed figure.
-          </span>
-        </div>
-
-        {
-          !providerReady && (
-            <div class="config-note" id="config-note">
-              <strong>Configure your donation provider.</strong> Set
-              <code>DONATION_PROVIDER_URL</code> in <code>src/config.js</code> to
-              a free Zeffy or Givebutter donation page. Until then, this button
-              shows the chosen amount but cannot complete a gift.
-            </div>
-          )
-        }
-
-        <button type="submit" class="donate-submit" id="donate-submit">
-          Continue — <span id="amount-display">$100</span><span id="freq-display"></span> &rarr;
-        </button>
         <p class="secure-note">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="11" width="18" height="11" rx="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
-          You will be taken to our secure donation provider to complete your gift.
+          Securely processed by Zeffy &mdash; a 0%-fee donation platform for nonprofits. Your gift is tax-deductible.
         </p>
-      </form>
+      </div>
     </div>
   </section>
 
@@ -186,6 +134,21 @@ const moreWays = [
   }
   .donate-body {
     padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .zeffy-embed {
+    width: 100%;
+  }
+  .zeffy-embed iframe {
+    width: 100%;
+    height: 1100px;
+    border: 0;
+    border-radius: 4px;
+    display: block;
+  }
+  @media (max-width: 600px) {
+    .zeffy-embed iframe {
+      height: 1320px;
+    }
   }
 
   .freq-toggle {
@@ -387,111 +350,3 @@ const moreWays = [
   }
 </style>
 
-<script>
-  const form = document.getElementById('donate-form');
-  if (form) {
-    const freqBtns = Array.from(form.querySelectorAll('.freq'));
-    const amountBtns = Array.from(form.querySelectorAll('.amount'));
-    const customWrap = document.getElementById('custom-wrap');
-    const customInput = document.getElementById('custom-amount');
-    const amountDisplay = document.getElementById('amount-display');
-    const freqDisplay = document.getElementById('freq-display');
-    const amountError = document.getElementById('amount-error');
-    const dedicateToggle = document.getElementById('dedicate-toggle');
-    const dedicateField = document.getElementById('dedicate-field');
-    const dedicateName = document.getElementById('dedicate-name');
-
-    const providerReady = form.dataset.providerReady === 'true';
-    const providerUrl = form.dataset.providerUrl;
-
-    let freq = 'one-time';
-    let amount = 100; // default preset
-
-    const effective = () => {
-      const custom = customInput.value.replace(/\D/g, '');
-      return custom ? Number(custom) : amount;
-    };
-
-    const refresh = () => {
-      const eff = effective();
-      amountDisplay.textContent = '$' + Number(eff || 0).toLocaleString('en-US');
-      freqDisplay.textContent = freq === 'monthly' ? '/month' : '';
-    };
-
-    freqBtns.forEach((b) => {
-      b.addEventListener('click', () => {
-        freq = b.dataset.freq;
-        freqBtns.forEach((x) => {
-          const on = x === b;
-          x.classList.toggle('active', on);
-          x.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        refresh();
-      });
-    });
-
-    amountBtns.forEach((b) => {
-      b.addEventListener('click', () => {
-        amount = Number(b.dataset.amount);
-        customInput.value = '';
-        customWrap.classList.remove('active');
-        amountBtns.forEach((x) => {
-          const on = x === b;
-          x.classList.toggle('active', on);
-          x.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        amountError.hidden = true;
-        refresh();
-      });
-    });
-
-    customInput.addEventListener('input', () => {
-      customInput.value = customInput.value.replace(/\D/g, '').slice(0, 7);
-      if (customInput.value) {
-        // typing overrides preset selection
-        amountBtns.forEach((x) => {
-          x.classList.remove('active');
-          x.setAttribute('aria-pressed', 'false');
-        });
-        customWrap.classList.add('active');
-      } else {
-        customWrap.classList.remove('active');
-      }
-      amountError.hidden = true;
-      refresh();
-    });
-
-    dedicateToggle.addEventListener('change', () => {
-      dedicateField.hidden = !dedicateToggle.checked;
-      if (!dedicateToggle.checked) dedicateName.value = '';
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const eff = effective();
-      if (!eff || eff < 1) {
-        amountError.textContent = 'Please choose or enter an amount.';
-        amountError.hidden = false;
-        return;
-      }
-
-      if (!providerReady) {
-        amountError.textContent =
-          'Donation provider not configured yet. Set DONATION_PROVIDER_URL in src/config.js.';
-        amountError.hidden = false;
-        return;
-      }
-
-      // Hand off to the real provider with amount/frequency/dedication as params.
-      const url = new URL(providerUrl);
-      url.searchParams.set('amount', String(eff));
-      url.searchParams.set('frequency', freq);
-      if (dedicateToggle.checked && dedicateName.value.trim()) {
-        url.searchParams.set('dedication', dedicateName.value.trim());
-      }
-      window.location.href = url.toString();
-    });
-
-    refresh();
-  }
-</script>
