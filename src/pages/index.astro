@@ -52,7 +52,7 @@ const goals = [
     <div class="container hero-inner">
       <p class="hero-eyebrow">
         <span class="rule" aria-hidden="true"></span>Medical missions &middot;
-        Equipment &middot; Training &middot; The Caribbean
+        Equipment &middot; Training<span class="eyebrow-extra"> &middot; The Caribbean</span>
       </p>
       <h1>Access to quality medical care for the Caribbean&rsquo;s underserved.</h1>
       <p class="hero-sub">
@@ -233,6 +233,13 @@ const goals = [
     border-right: none;
   }
   /* Clean 2x2 grid on tablet/mobile so labels never get cramped */
+  /* Shorten the hero eyebrow on phones so it fits one line */
+  @media (max-width: 600px) {
+    .hero-eyebrow .eyebrow-extra {
+      display: none;
+    }
+  }
+
   @media (max-width: 820px) {
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
