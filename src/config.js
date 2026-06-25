@@ -6,7 +6,7 @@
 // =============================================================================
 
 // Canonical production URL (no trailing slash). Used for SEO meta + JSON-LD.
-export const SITE_URL = 'https://javabhaiya.github.io/CaribHealth';
+export const SITE_URL = 'https://caribhealthfoundation.org';
 
 // Organization contact email (shown in the top bar, footer, contact page).
 export const ORG_EMAIL = 'caribhealthfoundation@gmail.com';

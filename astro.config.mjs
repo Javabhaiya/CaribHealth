@@ -4,8 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build
 export default defineConfig({
-  site: 'https://javabhaiya.github.io',
-  base: '/CaribHealth',
+  site: 'https://caribhealthfoundation.org',
   integrations: [tailwind(), sitemap()],
   output: 'static',
 });
