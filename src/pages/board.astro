@@ -138,9 +138,14 @@ const directors = [
             <div class="director-body">
               <h3>{d.name}</h3>
               <div class="role">{d.role}</div>
-              <p>{d.bio}</p>
-              {d.quote && <p class="director-quote">&ldquo;{d.quote}&rdquo;</p>}
               {d.tag && <div class="director-tag">{d.tag}</div>}
+              <div class="director-detail">
+                <p>{d.bio}</p>
+                {d.quote && <p class="director-quote">&ldquo;{d.quote}&rdquo;</p>}
+              </div>
+              <button type="button" class="bio-toggle" hidden aria-expanded="false">
+                Read more
+              </button>
               {d.interim && <div class="interim-note">Interim bio — pending approval</div>}
             </div>
           </article>
@@ -241,7 +246,13 @@ const directors = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+  .director-tag {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 0.8rem;
+    font-style: italic;
   }
   .director-body p {
     font-size: 0.9rem;
@@ -249,11 +260,26 @@ const directors = [
     line-height: 1.6;
     margin: 0;
   }
-  .director-tag {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-top: 0.5rem;
-    font-style: italic;
+  /* Collapsible bio — keeps the roster compact; full text stays in the HTML */
+  .director-detail.collapsed {
+    max-height: 5.4em;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent);
+  }
+  .bio-toggle {
+    margin-top: 0.55rem;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy-ink);
+    cursor: pointer;
+  }
+  .bio-toggle:hover {
+    color: var(--gold);
+    text-decoration: underline;
   }
   .director-quote {
     font-family: var(--serif);
@@ -316,3 +342,32 @@ const directors = [
     margin: 0;
   }
 </style>
+
+<script>
+  // Collapse long director bios to a few lines with a "Read more" toggle.
+  // Full bio text is in the HTML; this only enhances the display.
+  const init = () => {
+    document.querySelectorAll('.director-detail').forEach((detail) => {
+      const btn = detail.parentElement.querySelector('.bio-toggle');
+      detail.classList.add('collapsed');
+      // Short bios that already fit: show in full, no toggle.
+      if (detail.scrollHeight <= detail.clientHeight + 4) {
+        detail.classList.remove('collapsed');
+        return;
+      }
+      if (!btn) return;
+      btn.hidden = false;
+      btn.addEventListener('click', () => {
+        const collapsed = detail.classList.toggle('collapsed');
+        btn.textContent = collapsed ? 'Read more' : 'Read less';
+        btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      });
+    });
+  };
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(init);
+  } else {
+    init();
+  }
+</script>
