@@ -11,6 +11,14 @@ export const SITE_URL = 'https://caribhealthfoundation.org';
 // Organization contact email (shown in the top bar, footer, contact page).
 export const ORG_EMAIL = 'caribhealthfoundation@gmail.com';
 
+// Public social profile URLs. Added to SEO structured data (schema.org sameAs),
+// which directly feeds Google's knowledge panel. Uncomment/add as you create them.
+export const SOCIAL_PROFILES = [
+  // 'https://www.facebook.com/YourPage',
+  // 'https://www.instagram.com/YourHandle',
+  // 'https://www.linkedin.com/company/YourOrg',
+];
+
 // -----------------------------------------------------------------------------
 // Donation provider
 // Create a free nonprofit account at https://www.zeffy.com (0% fees) or

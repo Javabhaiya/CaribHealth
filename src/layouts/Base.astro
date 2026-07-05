@@ -1,16 +1,18 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_URL, ORG_EMAIL } from '../config.js';
+import { SITE_URL, ORG_EMAIL, SOCIAL_PROFILES } from '../config.js';
 
 const {
   title,
+  // Optional keyword-rich <title> override; falls back to "Title | Brand".
+  seoTitle,
   description = 'CaribHealth Foundation is a Connecticut 501(c)(3) nonprofit improving access to high-quality medical care, equipment, and training for underserved communities across the Caribbean.',
   path = '',
 } = Astro.props;
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, ''); // "/CaribHealth"
-const fullTitle = `${title} | CaribHealth Foundation`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fullTitle = seoTitle || `${title} | CaribHealth Foundation`;
 const canonical = `${SITE_URL}/${path}`.replace(/\/+$/, path === '' ? '/' : '');
 const ogImage = `${SITE_URL}/og-image.png`; // absolute URL required by social scrapers
 
@@ -19,10 +21,16 @@ const orgJsonLd = {
   '@type': 'NGO',
   name: 'CaribHealth Foundation',
   legalName: 'CaribHealth Foundation, Inc.',
+  alternateName: 'CaribHealth',
   identifier: '99-2604475',
+  taxID: '99-2604475',
+  nonprofitStatus: 'Nonprofit501c3',
   url: `${SITE_URL}/`,
+  logo: `${SITE_URL}/favicon-512.png`,
+  image: ogImage,
   email: ORG_EMAIL,
   foundingDate: '2024-03',
+  founder: { '@type': 'Person', name: 'Dr. Gyanprakash Ketwaroo' },
   description:
     'A Connecticut 501(c)(3) charitable organization improving access to high-quality medical care for underserved communities across the Caribbean.',
   address: {
@@ -31,7 +39,26 @@ const orgJsonLd = {
     addressRegion: 'CT',
     addressCountry: 'US',
   },
+  areaServed: { '@type': 'Place', name: 'Caribbean' },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: ORG_EMAIL,
+    contactType: 'General inquiries',
+  },
+  ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
 };
+
+// Breadcrumb trail (Home › Current) for inner pages — helps rich results.
+const breadcrumbJsonLd = path
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: title, item: canonical },
+      ],
+    }
+  : null;
 ---
 
 <!doctype html>
@@ -73,6 +100,14 @@ const orgJsonLd = {
       type="application/ld+json"
       set:html={JSON.stringify(orgJsonLd)}
     />
+    {
+      breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(breadcrumbJsonLd)}
+        />
+      )
+    }
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
