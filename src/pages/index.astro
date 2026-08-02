@@ -40,6 +40,19 @@ const goals = [
   { num: '$100K', text: 'Founding campaign goal to fund missions and supplies.' },
   { num: '3+', text: 'Local providers trained through workshops and grants.' },
 ];
+
+const missions = [
+  {
+    location: 'Georgetown, Guyana',
+    date: 'January 2025',
+    body: 'Led a local workshop on complex polypectomies and ERCP, and secured an agreement to support the first ERCP performed in Guyana.',
+  },
+  {
+    location: 'Kingston & Montego Bay, Jamaica',
+    date: '',
+    body: 'Delivered a workshop on endoscopic techniques — variceal banding, polypectomies, ERCP, and EUS — alongside a donation of medical supplies.',
+  },
+];
 ---
 
 <Base
@@ -112,18 +125,39 @@ const goals = [
     </div>
   </section>
 
-  <!-- Quote band (PLACEHOLDER) -->
+  <!-- Recent Missions -->
+  <div class="missions-band">
+    <div class="container">
+      <p class="eyebrow">Recent Missions</p>
+      <h2 class="section-title" style="max-width:680px;">Our work in the field.</h2>
+      <p class="lede">
+        Recent training missions and partnerships advancing endoscopic care
+        across the Caribbean.
+      </p>
+      <div class="missions-grid">
+        {
+          missions.map((m) => (
+            <article class="mission-card">
+              <div class="mission-meta">
+                <span class="mission-loc">{m.location}</span>
+                {m.date && <span class="mission-date">{m.date}</span>}
+              </div>
+              <p>{m.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote band -->
   <div class="quote-band">
     <div class="quote-inner">
       <p class="eyebrow" style="text-align:center;">Why It Matters</p>
-      <div class="amber-pill" style="margin-bottom:1.25rem;">
-        <span class="label">Placeholder</span>
-        <span class="note">Interim quote &mdash; pending Dr.&nbsp;Ketwaroo&rsquo;s approved words</span>
-      </div>
       <blockquote>
         &ldquo;Across much of the Caribbean, conditions routinely managed
         elsewhere go undiagnosed for years. Closing that gap is not charity
-        &mdash; it is equity.&rdquo;
+        &mdash; it is the right thing to do.&rdquo;
       </blockquote>
       <cite>Dr. Gyanprakash Ketwaroo &middot; Founder &amp; President</cite>
     </div>
@@ -305,6 +339,54 @@ const goals = [
     color: var(--navy);
   }
   .program-card p {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Recent Missions */
+  .missions-band {
+    background: var(--tint-2);
+    border-top: 1px solid var(--border);
+    padding: clamp(3rem, 5vw, 5rem) 0;
+  }
+  .missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .mission-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.75rem;
+  }
+  .mission-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
+  }
+  .mission-loc {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .mission-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .mission-card p {
     font-size: 0.9rem;
     color: var(--text-2);
     line-height: 1.65;
