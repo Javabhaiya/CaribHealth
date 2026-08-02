@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import { missions } from '../data/missions.js';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Missions"
+  seoTitle="Medical Missions in the Caribbean | CaribHealth Foundation"
+  path="missions"
+  description="CaribHealth Foundation's medical missions across the Caribbean — endoscopy training workshops, equipment donations, and partnerships that build lasting local capacity."
+>
+  <div class="page-band">
+    <div style="max-width:1100px;margin:0 auto;">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={`${base}/`}>Home</a><span class="sep">/</span>Missions
+      </nav>
+      <h1>Medical missions</h1>
+      <p class="intro">
+        Our volunteer clinical teams travel to partner sites across the
+        Caribbean to deliver hands-on training, donate equipment, and build
+        lasting local capacity &mdash; with founding strength in digestive
+        health.
+      </p>
+    </div>
+  </div>
+
+  <section class="container section">
+    <p class="eyebrow">Field Reports</p>
+    <h2 class="section-title" style="max-width:640px;">Where we&rsquo;ve worked.</h2>
+
+    <div class="missions-list">
+      {
+        missions.map((m) => (
+          <article class="mission-item">
+            <div class="mission-side">
+              {m.date && <div class="mission-date">{m.date}</div>}
+            </div>
+            <div class="mission-main">
+              <h3 class="mission-loc">{m.location}</h3>
+              <p>{m.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="cta-panel" style="margin-top:3.5rem;text-align:center;">
+      <h2 class="cta-h">Help fund the next mission.</h2>
+      <p class="cta-p">
+        Your support covers the travel, supplies, and training that leave lasting
+        capacity in Caribbean communities.
+      </p>
+      <a href={`${base}/donate`} class="btn btn-gold">Support Our Work</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .missions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .mission-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1.5rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.85rem;
+  }
+  .mission-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    padding-top: 0.2rem;
+  }
+  .mission-loc {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 0.5rem;
+  }
+  .mission-main p {
+    font-size: 0.92rem;
+    color: var(--text-2);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .cta-h {
+    font-family: var(--serif);
+    color: #fff;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    margin: 0 0 0.75rem;
+  }
+  .cta-p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    margin: 0 auto 1.5rem;
+    max-width: 520px;
+  }
+
+  @media (max-width: 600px) {
+    .mission-item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>
