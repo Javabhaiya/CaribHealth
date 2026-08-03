@@ -1,8 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { missions } from '../data/missions.js';
+import imgTeam from '../assets/IMG_6925.jpeg';
+import imgTower from '../assets/IMG_6918.jpeg';
+import imgUnit from '../assets/IMG_6911.jpeg';
+import imgSupplies1 from '../assets/IMG_6937.jpeg';
+import imgSupplies2 from '../assets/IMG_6936.jpeg';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const gallery = [
+  {
+    src: imgTeam,
+    alt: 'CaribHealth Foundation volunteers at the Tony Thwaites Wing, University Hospital of the West Indies, Kingston, Jamaica',
+    caption: 'Partnering at the University Hospital of the West Indies, Kingston',
+  },
+  {
+    src: imgTower,
+    alt: 'Endoscopy tower at a Caribbean partner hospital',
+    caption: 'Endoscopy suite at a partner hospital',
+  },
+  {
+    src: imgUnit,
+    alt: 'Electrosurgical unit set up for endoscopic procedures during a Caribbean mission',
+    caption: 'Electrosurgical equipment for endoscopic procedures',
+  },
+  {
+    src: imgSupplies1,
+    alt: 'Packaged endoscopic accessories donated to Caribbean partner clinics',
+    caption: 'Endoscopic accessories donated to partner clinics',
+  },
+  {
+    src: imgSupplies2,
+    alt: 'Endoscopy supplies and accessories prepared for donation and delivery',
+    caption: 'Preparing donated supplies for delivery',
+  },
+];
 ---
 
 <Base
@@ -42,6 +76,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <p>{m.body}</p>
             </div>
           </article>
+        ))
+      }
+    </div>
+
+    <div class="gallery-head">
+      <p class="eyebrow">From the Field</p>
+      <h2 class="section-title" style="max-width:640px;">Moments from our missions.</h2>
+    </div>
+    <div class="gallery-grid">
+      {
+        gallery.map((g) => (
+          <figure class="gallery-item">
+            <Image src={g.src} alt={g.alt} width={640} height={480} class="gallery-img" loading="lazy" />
+            <figcaption>{g.caption}</figcaption>
+          </figure>
         ))
       }
     </div>
@@ -93,6 +142,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--text-2);
     line-height: 1.7;
     margin: 0;
+  }
+
+  .gallery-head {
+    margin-top: clamp(3rem, 5vw, 4.5rem);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .gallery-item {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  :global(.gallery-img) {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-item figcaption {
+    font-size: 0.8rem;
+    color: var(--text-2);
+    line-height: 1.5;
+    padding: 0.75rem 0.9rem;
   }
 
   .cta-h {
