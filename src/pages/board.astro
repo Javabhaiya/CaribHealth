@@ -121,14 +121,6 @@ const directors = [
       CaribHealth Foundation is governed by a volunteer board of directors who
       set strategy, approve budgets, and oversee program performance.
     </p>
-    <div class="amber-banner" style="max-width:640px;margin:0 0 3rem;">
-      <span class="amber-tag">Placeholder</span>
-      <span>
-        Director <strong>names and roles are accurate</strong>. Biographies
-        marked &ldquo;Interim&rdquo; are placeholder copy pending each
-        director&rsquo;s approved bio.
-      </span>
-    </div>
 
     <div class="board-grid">
       {
@@ -157,7 +149,6 @@ const directors = [
               <button type="button" class="bio-toggle" hidden aria-expanded="false">
                 Read more
               </button>
-              {d.interim && <div class="interim-note">Interim bio — pending approval</div>}
             </div>
           </article>
         ))
@@ -302,19 +293,6 @@ const directors = [
     padding-left: 0.85rem;
     border-left: 2px solid var(--gold);
   }
-  .interim-note {
-    display: inline-block;
-    margin-top: 0.6rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--amber-text);
-    background: var(--amber-bg);
-    border: 1px solid var(--amber-border);
-    border-radius: 3px;
-    padding: 0.15rem 0.5rem;
-  }
-
   .govern-band {
     margin-top: 3rem;
     border: 1px solid var(--border);
