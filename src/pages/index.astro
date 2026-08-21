@@ -127,10 +127,8 @@ const goals = [
         {
           missions.map((m) => (
             <article class="mission-card">
-              <div class="mission-meta">
-                <span class="mission-loc">{m.location}</span>
-                {m.date && <span class="mission-date">{m.date}</span>}
-              </div>
+              {m.date && <div class="mission-date">{m.date}</div>}
+              <h3 class="mission-loc">{m.location}</h3>
               <p>{m.body}</p>
             </article>
           ))
@@ -349,27 +347,20 @@ const goals = [
     border-radius: 4px;
     padding: 1.75rem;
   }
-  .mission-meta {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.6rem;
-  }
-  .mission-loc {
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--navy);
-  }
   .mission-date {
     font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--gold);
-    white-space: nowrap;
+    margin-bottom: 0.4rem;
+  }
+  .mission-loc {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 0.5rem;
   }
   .mission-card p {
     font-size: 0.9rem;
