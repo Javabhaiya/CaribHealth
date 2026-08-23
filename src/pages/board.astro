@@ -34,7 +34,12 @@ const directors = [
     img: drKetwaroo,
     initials: 'GK',
     tag: 'Gastroenterology · Academic Medicine',
-    bio: 'Board-certified gastroenterologist whose clinical work in the region inspired the Foundation. Provides medical direction, leads clinical partnerships, and serves as the registered agent.',
+    bio: [
+      "Dr. Gyanprakash Ketwaroo is a Founder and President of CaribHealth Foundation, Inc. A practicing gastroenterologist, he is an Associate Professor of Medicine in the Section of Digestive Diseases at Yale School of Medicine, where he also serves as Vice Chief for Faculty Development and as Chief of Endoscopy at the West Haven VA. His clinical and research work focuses on advanced endoscopy, including the detection and management of Barrett's esophagus and pancreatic disorders.",
+      "He founded the Foundation in 2024 after years of clinical work in the Caribbean, where he saw firsthand how conditions routinely diagnosed and managed in higher-resource settings often go untreated or undertreated for years for lack of access to specialists, equipment, and training. That gap became the Foundation's reason for being.",
+      "A Rhodes Scholar, he holds an MD from Harvard Medical School, master's degrees in medical imaging and theoretical chemistry from Oxford University, and a BS in chemical physics from Brown University. He helps lead CaribHealth with the same conviction that shaped its founding.",
+    ],
+    quote: 'Closing that gap is not charity — it is the right thing to do.',
     interim: false,
   },
   {
@@ -143,7 +148,9 @@ const directors = [
               <div class="role">{d.role}</div>
               {d.tag && <div class="director-tag">{d.tag}</div>}
               <div class="director-detail">
-                <p>{d.bio}</p>
+                {(Array.isArray(d.bio) ? d.bio : [d.bio]).map((para) => (
+                  <p>{para}</p>
+                ))}
                 {d.quote && <p class="director-quote">&ldquo;{d.quote}&rdquo;</p>}
               </div>
               <button type="button" class="bio-toggle" hidden aria-expanded="false">
