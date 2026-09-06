@@ -50,6 +50,33 @@ const videos = [
   </div>
 
   <section class="container section">
+    <a
+      class="channel-card"
+      href="https://www.youtube.com/@GottumukkalaSRaju"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <div class="channel-icon" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"
+          />
+        </svg>
+      </div>
+      <div class="channel-body">
+        <span class="channel-label">Recommended by Our Physicians</span>
+        <h2>Gottumukkala S. Raju, MD</h2>
+        <p>
+          Professor of Gastroenterology, Hepatology and Nutrition at MD Anderson
+          Cancer Center and founding Editor-in-Chief of <em>VideoGIE</em>. His
+          free, non-monetized YouTube channel hosts more than a thousand
+          colonoscopy teaching videos on improving adenoma detection and
+          resection technique to prevent colon cancer.
+        </p>
+        <span class="channel-link">Visit the channel on YouTube &rarr;</span>
+      </div>
+    </a>
+
     <div class="video-grid">
       {
         videos.map((v) => (
@@ -101,6 +128,74 @@ const videos = [
 </Base>
 
 <style>
+  .channel-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s;
+  }
+  .channel-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+  .channel-icon {
+    flex: none;
+    color: #c4302b;
+    line-height: 0;
+    margin-top: 0.15rem;
+  }
+  .channel-label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    background: #fef9ec;
+    border: 1px solid #fde68a;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .channel-body h2 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 0.4rem;
+    line-height: 1.35;
+  }
+  .channel-body p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+    max-width: 62ch;
+  }
+  .channel-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .channel-card:hover .channel-link {
+    color: var(--gold);
+  }
+  @media (max-width: 560px) {
+    .channel-card {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
   .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
