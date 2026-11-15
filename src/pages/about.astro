@@ -115,6 +115,43 @@ const facts = [
     </div>
   </div>
 
+  <section class="container section">
+    <p class="eyebrow">Recognition</p>
+    <h2 class="section-title" style="max-width:680px;">
+      Recognized by the ASGE.
+    </h2>
+    <p class="body-p" style="max-width:760px;">
+      The American Society for Gastrointestinal Endoscopy &mdash; the
+      professional society for the field &mdash; named Foundation founder
+      Dr. Gyanprakash Avinash Ketwaroo a 2026 ASGE HANDS Award Honoree. The
+      HANDS Award recognizes charitable and humanitarian service in digestive
+      and hepatic healthcare.
+    </p>
+    <blockquote class="citation">
+      <p>
+        Through the CaribHealth Foundation, Dr. Gyanprakash Avinash Ketwaroo is
+        expanding access to advanced endoscopic care for underserved populations
+        across Jamaica and the Caribbean. By leading recurring medical missions,
+        provider training, and equipment donation efforts, he has helped
+        introduce critical procedures, including the first ERCPs in Montego Bay,
+        Jamaica, while building sustainable endoscopy capacity throughout the
+        region.
+      </p>
+      <footer>
+        American Society for Gastrointestinal Endoscopy &middot; 2026 HANDS
+        Award Honorees
+      </footer>
+    </blockquote>
+    <a
+      class="citation-link"
+      href="https://www.asge.org/home/about-asge/grants-awards/awards/hands-honors-program/award-winners"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View the ASGE HANDS Award honorees &rarr;
+    </a>
+  </section>
+
   <section class="container" style="padding:clamp(3rem,5vw,4.5rem) clamp(1.25rem,4vw,2rem);">
     <div class="cta-panel cta-split">
       <div style="max-width:560px;">
@@ -130,6 +167,39 @@ const facts = [
 </Base>
 
 <style>
+  .citation {
+    margin: 1.75rem 0 1.25rem;
+    padding: 1.5rem 1.75rem;
+    max-width: 760px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+  }
+  .citation p {
+    font-family: var(--serif);
+    font-size: 0.97rem;
+    line-height: 1.75;
+    color: var(--navy-ink);
+    margin: 0 0 0.9rem;
+  }
+  .citation footer {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .citation-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .citation-link:hover {
+    text-decoration: underline;
+  }
+
   .two-col {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

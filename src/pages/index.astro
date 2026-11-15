@@ -84,6 +84,29 @@ const goals = [
     </div>
   </div>
 
+  <!-- Recognition -->
+  <div class="recognition">
+    <div class="container recognition-inner">
+      <p class="eyebrow" style="margin-bottom:0.9rem;">Recognition</p>
+      <p class="recognition-text">
+        The American Society for Gastrointestinal Endoscopy has named founder
+        Dr. Gyanprakash Ketwaroo a
+        <strong>2026 ASGE HANDS Award Honoree</strong>, recognizing charitable
+        and humanitarian service in digestive healthcare &mdash; citing
+        CaribHealth&rsquo;s recurring missions, provider training, and equipment
+        donation across Jamaica and the Caribbean.
+      </p>
+      <a
+        class="recognition-link"
+        href="https://www.asge.org/home/about-asge/grants-awards/awards/hands-honors-program/award-winners"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View the ASGE HANDS Award honorees &rarr;
+      </a>
+    </div>
+  </div>
+
   <!-- What We Do -->
   <section class="container section">
     <p class="eyebrow">What We Do</p>
@@ -185,6 +208,36 @@ const goals = [
 </Base>
 
 <style>
+  .recognition {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: clamp(2.25rem, 4vw, 3.25rem) 0;
+  }
+  .recognition-inner {
+    max-width: 780px;
+    text-align: center;
+  }
+  .recognition-text {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.7;
+    color: var(--navy-ink);
+    margin: 0 0 1rem;
+  }
+  .recognition-text strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .recognition-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .recognition-link:hover {
+    text-decoration: underline;
+  }
+
   .hero {
     background: linear-gradient(160deg, #12294a 0%, var(--navy) 62%);
     color: #fff;
