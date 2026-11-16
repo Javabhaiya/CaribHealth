@@ -1,0 +1,21 @@
+# Dependabot version updates. Security alerts/updates must also be enabled in
+# the repository settings (Settings → Advanced Security).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      # Batch minor/patch bumps into one PR to keep review light.
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: ['*']
