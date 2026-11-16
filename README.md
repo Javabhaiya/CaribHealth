@@ -14,8 +14,9 @@ Serif display type and Inter body type.
 
 - **[Astro](https://astro.build)** — static site generator (zero JS shipped by
   default; the few interactive pieces are vanilla `<script>` islands).
-- **[Tailwind CSS](https://tailwindcss.com)** via `@astrojs/tailwind` — design
-  tokens live in `tailwind.config.mjs`; most layout uses scoped component styles
+- **[Tailwind CSS](https://tailwindcss.com)** v4 via `@tailwindcss/vite`
+  (entry: `src/styles/tailwind.css`) — design tokens live in
+  `tailwind.config.mjs`; most layout uses scoped component styles
   plus shared CSS variables defined in `src/layouts/Base.astro`.
 - **`@astrojs/sitemap`** — auto-generates `sitemap-index.xml` / `sitemap-0.xml`.
 - **`sharp`** — powers Astro's `<Image>` optimization (the board headshot is
@@ -52,8 +53,8 @@ npm install
 npm run dev          # http://localhost:4321/CaribHealth
 ```
 
-> **Note on Node:** this project was scaffolded with Node 24 LTS. Any current
-> Node 18+/20+/22+/24+ works. The CI workflow uses Node 20.
+> **Note on Node:** Astro 7 requires Node 22.23.4+ (Node 24 LTS recommended).
+> The CI workflow uses Node 24.
 
 ## Build
 
@@ -114,7 +115,7 @@ top comment.
    export default defineConfig({
      site: 'https://www.caribhealthfoundation.org',
      // base: '/CaribHealth',   ← delete this line
-     integrations: [tailwind(), sitemap()],
+     integrations: [sitemap()],
      output: 'static',
    });
    ```
@@ -150,3 +151,17 @@ is final and should be kept.
 
 The original design prototype and full handoff spec are preserved (out of the
 build) in **`_design-reference/`**.
+
+## Security
+
+- **Content-Security-Policy** is set with a `<meta>` tag in
+  `src/layouts/Base.astro` (GitHub Pages can't send headers; Cloudflare adds
+  HSTS, X-Frame-Options, frame-ancestors, etc. at the edge). If you add a new
+  third-party script, font, iframe or form endpoint, add its origin to the
+  matching directive there or the browser will block it.
+- Client `<script>`s are emitted as files (`vite.build.assetsInlineLimit: 0` in
+  `astro.config.mjs`) so the CSP can forbid inline scripts.
+- `public/.well-known/security.txt` — keep `Contact` current and renew
+  `Expires` before it lapses.
+- Dependabot (`.github/dependabot.yml`) opens weekly update PRs for npm and
+  GitHub Actions; Actions in `deploy.yml` are pinned to commit SHAs.
