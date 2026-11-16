@@ -1,7 +1,7 @@
 # CaribHealth Foundation — Website
 
 Marketing/informational website for **CaribHealth Foundation, Inc.** — a
-Connecticut 501(c)(3) nonprofit (EIN 99-2604475, incorporated March 2024) that
+Connecticut 501(c)(3) nonprofit (incorporated March 2024) that
 facilitates access to high-quality medical care for underserved populations
 across the Caribbean.
 
@@ -139,6 +139,10 @@ These are flagged in-page with **amber "Placeholder / Interim" banners**. Real,
 filing-sourced content (org name, EIN, 501(c)(3) status, CT incorporation,
 Orange CT office, the four programs, director names & roles, governance facts)
 is final and should be kept.
+
+> **EIN:** set once as `ORG_EIN` in `src/config.js` and shown **only** on the
+> Donate page (header, matching-gift section and structured data). Keep it off
+> other pages and out of these docs.
 
 | Placeholder content                              | File(s)                          |
 | ------------------------------------------------ | -------------------------------- |

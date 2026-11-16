@@ -1,7 +1,7 @@
 # Handoff: CaribHealth Foundation — Marketing Website
 
 ## Overview
-A complete marketing/informational website for **CaribHealth Foundation, Inc.**, a Connecticut 501(c)(3) nonprofit (EIN 99-2604475, incorporated March 2024) that facilitates access to high-quality medical care for underserved populations across the Caribbean. Founded by gastroenterologist Dr. Gyanprakash Ketwaroo, with founding strength in digestive health.
+A complete marketing/informational website for **CaribHealth Foundation, Inc.**, a Connecticut 501(c)(3) nonprofit (incorporated March 2024) that facilitates access to high-quality medical care for underserved populations across the Caribbean. Founded by gastroenterologist Dr. Gyanprakash Ketwaroo, with founding strength in digestive health.
 
 The site is a single-page application with 8 client-side "pages" (no server routing), plus a multi-step donation flow, a validated contact form, a filterable/searchable missions calendar, and a newsletter capture. It is navy (`#0a1f3d`) + gold (`#b8860b`) with IBM Plex Serif display type and Inter body type.
 
@@ -34,7 +34,7 @@ The files in this bundle are **design references created in HTML** — a working
 
 ### Utility bar (top, full-width)
 - Background `#0a1f3d`, text `rgba(255,255,255,0.75)`, font-size `0.78rem`, padding `0.55rem clamp(1rem,4vw,2rem)`.
-- Left: a gold `◆` glyph + "501(c)(3) Nonprofit · EIN 99-2604475 · Incorporated in Connecticut, 2024".
+- Left: a gold `◆` glyph + "501(c)(3) Nonprofit · Incorporated in Connecticut, 2024".
 - Right: `caribhealthfoundation@gmail.com` (mailto link).
 
 ### Sticky nav (below utility bar)
@@ -47,7 +47,7 @@ The files in this bundle are **design references created in HTML** — a working
 - Background `#0a1f3d`, padding `clamp(2.75rem,5vw,3.5rem) clamp(1.25rem,4vw,2rem) 2rem`, font `0.85rem`, text `rgba(255,255,255,0.7)`.
 - Grid: brand column (logo + 1-sentence description + **newsletter capture**) and two link columns ("Organization" and "Engage").
 - **Newsletter capture:** label "GET MISSION UPDATES", email input (`rgba(255,255,255,0.08)` bg, `1px solid rgba(255,255,255,0.18)`, white text) + gold **Subscribe** button. On invalid email → error text `#f0a0a0`. On success → replaces form with "✓ You're subscribed — thank you for following our work." (gold). Persists via `localStorage['chf_newsletter']`.
-- Bottom bar: "© 2026 CaribHealth Foundation, Inc. · 501(c)(3) · EIN 99-2604475 · Orange, CT" and the email, separated by a `1px solid rgba(255,255,255,0.1)` top border.
+- Bottom bar: "© 2026 CaribHealth Foundation, Inc. · 501(c)(3) · Orange, CT" and the email, separated by a `1px solid rgba(255,255,255,0.1)` top border.
 
 ---
 
@@ -109,7 +109,7 @@ A recurring **eyebrow** label appears above section headings: `0.72rem`, upperca
 
 ### 7. Get Involved (Donation flow + more ways)
 The flagship interaction. A centered card (max 660px), white, `border-radius: 6px`, `box-shadow: 0 8px 30px rgba(10,31,61,0.06)`.
-- **Card header:** navy gradient, "Make a donation" + "Tax-deductible · 501(c)(3) · EIN 99-2604475", and a 3-dot step indicator (active dot = gold).
+- **Card header:** navy gradient, "Make a donation" + "Tax-deductible · 501(c)(3) · EIN" (the EIN appears only on the Donate page; see `ORG_EIN` in `src/config.js`), and a 3-dot step indicator (active dot = gold).
 - **Step 1 — Amount:**
   - One-time / Monthly segmented toggle (active segment = white pill with shadow on `#f3f4f6` track).
   - 6 preset amount pills in a 3-col grid: $10/$25/$50/$100/$250/$500 (selected = navy filled). Default selected: **$100**.
@@ -126,7 +126,7 @@ The flagship interaction. A centered card (max 660px), white, `border-radius: 6p
 
 ### 8. Contact (validated form)
 - Header band + breadcrumb.
-- Two columns. **Left — contact info:** intro + 4 icon rows (Email / Response Time "Within 2 business days" / Principal Office "Orange, Connecticut, USA — Programs across the Caribbean" / Tax ID "501(c)(3) · EIN 99-2604475").
+- Two columns. **Left — contact info:** intro + 4 icon rows (Email / Response Time "Within 2 business days" / Principal Office "Orange, Connecticut, USA — Programs across the Caribbean" / Tax Status "501(c)(3) nonprofit").
 - **Right — form:** Full name (required), Email (required, regex), Organization (optional), **Reason for inquiry** `<select>` (8 options, see below), Message (required, min 10 chars). Required fields marked with a gold `*`. Inline red errors per field.
   - On success → replaces the form with a green confirmation card: "Your inquiry has been received." personalized with the entered name + email, and a **Send another inquiry** reset button.
   - Reason options: Clinical volunteer inquiry · Institutional partnership · Donation inquiry · Board membership inquiry · Submit a testimonial · Request information packet · Media or press · General inquiry.
@@ -172,7 +172,7 @@ Port these from the `Component` logic class:
 **Icons:** inline stroke SVGs (1.4–2 stroke width), Lucide-style. In production use **Lucide** (or similar): heart-pulse, briefcase-medical, graduation-cap, shield-check, mail, clock, map-pin, file-text, search, menu.
 
 ## Content status (what's real vs. placeholder)
-- **Real (from incorporation filings / EIN / bylaws — keep):** org name, EIN 99-2604475, 501(c)(3) status, CT incorporation March 2024, Orange CT office, the four program areas, director **names & roles** (Ketwaroo / Phillips / Dixon), governance facts, Dr. Ketwaroo's photo.
+- **Real (from incorporation filings / EIN / bylaws — keep):** org name, EIN (Donate page only), 501(c)(3) status, CT incorporation March 2024, Orange CT office, the four program areas, director **names & roles** (Ketwaroo / Phillips / Dixon), governance facts, Dr. Ketwaroo's photo.
 - **⚠ Placeholder / interim (flagged amber in-page — replace before launch):** both Dr. Ketwaroo **quotes** (Home + Stories), all **Stories testimonials**, the entire **Missions/Events** schedule, the **first-year goals** figures, the **$25K** donation-goal figure, and the director **bio paragraphs** (names/roles are fine).
 
 ## Assets

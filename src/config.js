@@ -8,6 +8,10 @@
 // Canonical production URL (no trailing slash). Used for SEO meta + JSON-LD.
 export const SITE_URL = 'https://caribhealthfoundation.org';
 
+// IRS Employer Identification Number. Shown ONLY on the Donate page (for donors
+// and employer matching-gift programs); deliberately kept off other pages.
+export const ORG_EIN = '99-2604475';
+
 // Organization contact email (shown in the top bar, footer, contact page).
 export const ORG_EMAIL = 'caribhealthfoundation@gmail.com';
 
