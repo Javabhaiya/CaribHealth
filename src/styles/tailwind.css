@@ -1,0 +1,25 @@
+/* Tailwind v4 entry. Replaces the deprecated @astrojs/tailwind integration,
+   which injected these base styles on every page. The existing JS config
+   (theme tokens + content globs) is loaded for compatibility. */
+@import 'tailwindcss';
+@config '../../tailwind.config.mjs';
+
+/* Tailwind v3 preflight defaults that changed in v4, kept so the site renders
+   exactly as before the upgrade (see Tailwind's v4 upgrade guide). */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #e5e7eb;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
