@@ -9,6 +9,9 @@ const {
   seoTitle,
   description = 'CaribHealth Foundation is a Connecticut 501(c)(3) nonprofit improving access to high-quality medical care, equipment, and training for underserved communities across the Caribbean.',
   path = '',
+  // EIN for structured data. Only the Donate page passes it; every other
+  // page omits it on purpose.
+  taxId,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -22,8 +25,7 @@ const orgJsonLd = {
   name: 'CaribHealth Foundation',
   legalName: 'CaribHealth Foundation, Inc.',
   alternateName: 'CaribHealth',
-  identifier: '99-2604475',
-  taxID: '99-2604475',
+  ...(taxId ? { identifier: taxId, taxID: taxId } : {}),
   nonprofitStatus: 'Nonprofit501c3',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/favicon-512.png`,
