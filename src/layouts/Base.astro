@@ -2,6 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_URL, ORG_EMAIL, SOCIAL_PROFILES } from '../config.js';
+import '../styles/tailwind.css';
 
 const {
   title,
@@ -12,6 +13,32 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Content-Security-Policy, delivered as a <meta> tag because GitHub Pages
+// cannot set response headers. Allow only what the site actually loads:
+//  - scripts:  own bundles in /_astro/ (and Cloudflare's same-origin
+//              /cdn-cgi/ email-decode script, if Email Obfuscation is on)
+//  - styles:   own CSS + Google Fonts CSS; 'unsafe-inline' is required for
+//              the style="" attributes and small inlined <style> blocks
+//  - fonts:    Google Fonts files
+//  - frames:   the Zeffy donation form on /donate/
+//  - connect / form-action: the Web3Forms contact form on /contact/
+// frame-ancestors is ignored in <meta>; Cloudflare sends it as a header.
+// `astro dev` (only) injects an inline script for its dev toolbar, so the
+// dev server allows inline scripts; the built site never does.
+const csp = [
+  "default-src 'self'",
+  import.meta.env.DEV ? "script-src 'self' 'unsafe-inline'" : "script-src 'self'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data:",
+  'frame-src https://www.zeffy.com',
+  "connect-src 'self' https://api.web3forms.com",
+  "form-action 'self' https://api.web3forms.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
 const fullTitle = seoTitle || `${title} | CaribHealth Foundation`;
 const canonical = `${SITE_URL}/${path}`.replace(/\/+$/, path === '' ? '/' : '');
 const ogImage = `${SITE_URL}/og-image.png`; // absolute URL required by social scrapers
@@ -65,6 +92,7 @@ const breadcrumbJsonLd = path
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
